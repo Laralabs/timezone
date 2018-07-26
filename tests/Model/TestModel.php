@@ -8,6 +8,8 @@ class TestModel extends Model
 {
     protected $table = 'test_models';
 
+    protected $timestamps = false;
+
     protected $fillable = [
         'name',
         'timestamp',
