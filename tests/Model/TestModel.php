@@ -8,7 +8,7 @@ class TestModel extends Model
 {
     protected $table = 'test_models';
 
-    protected $timestamps = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'name',
