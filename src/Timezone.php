@@ -130,7 +130,7 @@ class Timezone implements TimezoneInterface
     {
         if ($collection instanceof Collection) {
             if ($timezone === null) {
-                $timezone = (string)$direction === 'from' ? $this->displayTimezone : $this->storageTimezone;
+                $timezone = $this->displayTimezone;
             }
             $params = ['columns' => $columns, 'direction' => $direction, 'timezone' => $timezone];
 
