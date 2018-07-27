@@ -4,7 +4,6 @@ namespace Laralabs\Timezone\Tests;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
 use Laralabs\Timezone\Tests\Model\TestModel;
 use Laralabs\Timezone\Timezone;
 

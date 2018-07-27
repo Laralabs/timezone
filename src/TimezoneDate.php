@@ -15,7 +15,7 @@ class TimezoneDate extends Date
      * Date constructor.
      *
      * @param null|string $time
-     * @param null $timezone
+     * @param null        $timezone
      */
     public function __construct(?string $time = null, $timezone = null)
     {
@@ -29,6 +29,7 @@ class TimezoneDate extends Date
      *
      * @param string $format
      * @param string $locale
+     *
      * @return mixed|string
      */
     public function formatToLocale(string $format, string $locale)
@@ -36,7 +37,7 @@ class TimezoneDate extends Date
         static::setLocale($locale);
 
         $date = $this->format($format);
-        
+
         static::setLocale(static::$currentLocale);
 
         return $date;

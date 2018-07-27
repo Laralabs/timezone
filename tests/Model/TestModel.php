@@ -13,12 +13,12 @@ class TestModel extends Model
     protected $fillable = [
         'name',
         'timestamp',
-        'datetime'
+        'datetime',
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'timestamp'
+        'timestamp',
     ];
 }

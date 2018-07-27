@@ -42,12 +42,15 @@ class Timezone implements TimezoneInterface
      *
      * @param null $date
      * @param null $fromTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate
     {
-        if (!$fromTimezone) { $fromTimezone = $this->displayTimezone; }
-        $date = $this->createDate($date , $fromTimezone);
+        if (!$fromTimezone) {
+            $fromTimezone = $this->displayTimezone;
+        }
+        $date = $this->createDate($date, $fromTimezone);
 
         $date->timezone = $this->storageTimezone;
 
@@ -59,12 +62,17 @@ class Timezone implements TimezoneInterface
      *
      * @param null $date
      * @param null $toTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate
     {
-        if (!$toTimezone) { $toTimezone = $this->displayTimezone; }
-        if (!\is_int($date) && !$this->isTimestamp($date)) { $toTimezone = $this->storageTimezone; }
+        if (!$toTimezone) {
+            $toTimezone = $this->displayTimezone;
+        }
+        if (!\is_int($date) && !$this->isTimestamp($date)) {
+            $toTimezone = $this->storageTimezone;
+        }
         $date = $this->createDate($date);
 
         $date->timezone = $toTimezone;
@@ -77,15 +85,17 @@ class Timezone implements TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $fromTimezone
+     * @param array                               $columns
+     * @param null|string                         $fromTimezone
      *
      * @return \Illuminate\Support\Collection
      */
     public function convertCollectionToStorage($collection = null, array $columns = [], $fromTimezone = null): Collection
     {
         if ($collection instanceof Collection) {
-            if (!$fromTimezone) { $fromTimezone = $this->displayTimezone; }
+            if (!$fromTimezone) {
+                $fromTimezone = $this->displayTimezone;
+            }
             $params = ['columns' => $columns, 'fromTimezone' => $fromTimezone];
 
             return $collection->map(function ($item) use ($params) {
@@ -112,15 +122,17 @@ class Timezone implements TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $toTimezone
+     * @param array                               $columns
+     * @param null|string                         $toTimezone
      *
      * @return \Illuminate\Support\Collection
      */
     public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): Collection
     {
         if ($collection instanceof Collection) {
-            if (!$toTimezone) { $toTimezone = $this->displayTimezone; }
+            if (!$toTimezone) {
+                $toTimezone = $this->displayTimezone;
+            }
             $params = ['columns' => $columns, 'toTimezone' => $toTimezone];
 
             return $collection->map(function ($item) use ($params) {
@@ -147,14 +159,24 @@ class Timezone implements TimezoneInterface
      *
      * @param null $date
      * @param null $timezone
+     *
      * @return TimezoneDate
      */
     protected function createDate($date = null, $timezone = null): TimezoneDate
     {
-        if (!$timezone) { $timezone = $this->storageTimezone; }
-        if (\is_int($date)) { $date = date('Y-m-d H:i:s'); }
-        if ($this->parseUK) { $date = $this->formatUKDate($date); }
-        if (!$this->isTimestamp($date)) { $timezone = $this->storageTimezone; }
+        if (!$timezone) {
+            $timezone = $this->storageTimezone;
+        }
+        if (\is_int($date)) {
+            $date = date('Y-m-d H:i:s');
+        }
+        if ($this->parseUK) {
+            $date = $this->formatUKDate($date);
+        }
+        if (!$this->isTimestamp($date)) {
+            $timezone = $this->storageTimezone;
+        }
+
         return new $this->date($date, $timezone);
     }
 
@@ -176,7 +198,7 @@ class Timezone implements TimezoneInterface
                 foreach (\DateTimeZone::listIdentifiers() as $timezone) {
                     $now->setTimezone(new \DateTimeZone($timezone));
                     $offsets[] = $offset = $now->getOffset();
-                    $timezones[$timezone] = '(' . $this->formatGmtOffset($offset) . ') ' . $this->formatTimezoneName($timezone);
+                    $timezones[$timezone] = '('.$this->formatGmtOffset($offset).') '.$this->formatTimezoneName($timezone);
                 }
 
                 array_multisort($offsets, $timezones);
@@ -194,19 +216,22 @@ class Timezone implements TimezoneInterface
      * Format GMT offset.
      *
      * @param $offset
+     *
      * @return string
      */
     protected function formatGmtOffset($offset): string
     {
-        $hours = (int)($offset / 3600);
-        $minutes = abs((int)($offset % 3600 / 60));
-        return 'GMT' . ($offset ? sprintf('%+03d:%02d', $hours, $minutes) : '');
+        $hours = (int) ($offset / 3600);
+        $minutes = abs((int) ($offset % 3600 / 60));
+
+        return 'GMT'.($offset ? sprintf('%+03d:%02d', $hours, $minutes) : '');
     }
 
     /**
      * Format timezone name.
      *
      * @param $name
+     *
      * @return mixed
      */
     protected function formatTimezoneName($name): string
@@ -218,6 +243,7 @@ class Timezone implements TimezoneInterface
      * Format UK Date, replace '/' with '-'.
      *
      * @param $date
+     *
      * @return string
      */
     protected function formatUKDate($date): string
@@ -229,6 +255,7 @@ class Timezone implements TimezoneInterface
      * Check if given date is a timestamp.
      *
      * @param $date
+     *
      * @return bool
      */
     protected function isTimestamp($date): bool
