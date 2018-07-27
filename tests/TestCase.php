@@ -107,11 +107,13 @@ abstract class TestCase extends Orchestra
                 'name' => 'Test Model',
                 'timestamp' => $this->testEuropeLondon,
                 'datetime' => $this->testEuropeLondon,
+                'id' => 1
             ],
             [
                 'name' => 'Test Model 2',
                 'timestamp' => $this->testEuropeLondon,
                 'datetime' => $this->testEuropeLondon,
+                'id' => 2
             ],
         ]);
     }

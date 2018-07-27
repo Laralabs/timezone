@@ -142,12 +142,12 @@ class Timezone implements TimezoneInterface
                     if (\is_array($item)) {
                         $item[$column] = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item[$column], $params['timezone']) : $this->convertToStorage($item[$column], $params['timezone']);
                         if ($item[$column] instanceof TimezoneDate) {
-                            $item[$column] = $item[$column]->formatDefault();
+                            //$item[$column] = $item[$column]->formatDefault();
                         }
                     } else {
                         $item->$column = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item->$column, $params['timezone']) : $this->convertToStorage($item->$column, $params['timezone']);
                         if ($item->$column instanceof TimezoneDate) {
-                            $item->$column = $item->$column->formatDefault();
+                            //$item->$column = $item->$column->formatDefault();
                         }
                     }
                 }

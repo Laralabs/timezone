@@ -140,7 +140,7 @@ class TimezoneTest extends TestCase
     {
         $collection = TestModel::all()->toArray();
 
-        $converted = timezone()->convertCollectionFromStorage(collect($collection));
+        $converted = timezone()->convertCollectionFromStorage(collect($collection), ['datetime', 'timestamp']);
 
         $intended = $this->getExpectedTestArray();
 
