@@ -4,6 +4,7 @@ namespace Laralabs\Timezone\Tests;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Laralabs\Timezone\Tests\Model\TestModel;
 use Laralabs\Timezone\Timezone;
 
@@ -108,7 +109,21 @@ class TimezoneTest extends TestCase
 
         $this->assertTrue(Cache::has('timezone.timezones'));
 
-        $cached = timezone()->getTimezones();
+        $cached = \Laralabs\Timezone\Facades\Timezone::getTimezones();
         $this->assertEquals($timezones, $cached);
+    }
+
+    /** @test */
+    public function it_parses_full_uk_date_to_storage_and_formats_it_back(): void
+    {
+        Config::set('timezone.parse_uk_dates', true);
+
+        $converted = timezone()->convertToStorage($this->testUKParse);
+
+        $this->assertEquals($this->testUTC, $converted);
+        
+        $convertedBack = timezone()->convertFromStorage($converted)->format('d/m/Y H:i:s');
+
+        $this->assertEquals($this->testUKParse, $convertedBack);
     }
 }

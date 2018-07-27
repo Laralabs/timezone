@@ -167,9 +167,6 @@ class Timezone implements TimezoneInterface
         if (!$timezone) {
             $timezone = $this->storageTimezone;
         }
-        if (\is_int($date)) {
-            $date = date('Y-m-d H:i:s');
-        }
         if ($this->parseUK) {
             $date = $this->formatUKDate($date);
         }

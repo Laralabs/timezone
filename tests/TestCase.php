@@ -24,6 +24,9 @@ abstract class TestCase extends Orchestra
     /** @var string */
     protected $testEuropeLondon = '2018-07-25 14:00:00';
 
+    /** @var string  */
+    protected $testUKParse = '25/07/2018 14:00:00';
+
     public function setUp(): void
     {
         $this->loadEnvironmentVariables();
