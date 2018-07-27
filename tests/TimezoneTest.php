@@ -134,7 +134,7 @@ class TimezoneTest extends TestCase
 
         timezone()->convertCollectionFromStorage([]);
     }
-    
+
     /** @test */
     public function it_converts_collection_of_arrays(): void
     {

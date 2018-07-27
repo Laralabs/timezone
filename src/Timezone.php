@@ -117,7 +117,8 @@ class Timezone implements TimezoneInterface
      * @param $collection
      * @param $columns
      * @param string $direction
-     * @param null $timezone
+     * @param null   $timezone
+     *
      * @return Collection
      */
     protected function convertCollection($collection, $columns, $direction = 'from', $timezone = null): Collection
