@@ -96,10 +96,9 @@ class TimezoneTest extends TestCase
     /** @test */
     public function it_can_format_to_locale(): void
     {
-        $converted = \Laralabs\Timezone\Facades\Timezone::convertFromStorage($this->testUTC)->formatToLocale('l j F Y H:i:s', 'nl');
-        $intended = 'woensdag 25 juli 2018 14:00:00';
+        $converted = \Laralabs\Timezone\Facades\Timezone::convertFromStorage($this->testUTC)->formatToLocale($this->testLocaleFormat, $this->testLocale);
 
-        $this->assertEquals($intended, $converted);
+        $this->assertEquals($this->testLocaleResult, $converted);
     }
 
     /** @test */
@@ -122,9 +121,55 @@ class TimezoneTest extends TestCase
 
         $this->assertEquals($this->testUTC, $converted);
 
-        $convertedBack = timezone()->convertFromStorage($converted)->format('d/m/Y H:i:s');
+        $convertedBack = timezone()->convertFromStorage($converted)->format($this->testUKFormat);
 
         $this->assertEquals($this->testUKParse, $convertedBack);
+    }
+
+    /** @test */
+    public function it_converts_collection_from_storage_and_back_with_string_format(): void
+    {
+        Config::set('timezone.parse_uk_dates', true);
+        $collection = TestModel::all();
+
+        $this->assertInstanceOf(Collection::class, $collection);
+
+        $converted = timezone()->convertCollectionFromStorage($collection, $this->testColumns, $this->testUKFormat);
+
+        for ($i = 0; $i < $converted->count(); $i++) {
+            $this->assertTrue($converted->contains('timestamp', $this->testUKParse));
+            $this->assertTrue($converted->contains('datetime', $this->testUKParse));
+        }
+
+        $converted = timezone()->convertCollectionToStorage($converted, $this->testColumns);
+
+        for ($i = 0; $i < $converted->count(); $i++) {
+            $this->assertTrue($converted->contains('timestamp', $this->testUTC));
+            $this->assertTrue($converted->contains('datetime', $this->testUTC));
+        }
+    }
+
+    /** @test */
+    public function it_converts_collection_from_storage_and_back_with_array_locale_format(): void
+    {
+        Config::set('timezone.parse_uk_dates', true);
+        $collection = TestModel::all();
+
+        $this->assertInstanceOf(Collection::class, $collection);
+
+        $converted = timezone()->convertCollectionFromStorage($collection, $this->testColumns, [$this->testLocaleFormat, $this->testLocale]);
+
+        for ($i = 0; $i < $converted->count(); $i++) {
+            $this->assertTrue($converted->contains('timestamp', $this->testLocaleResult));
+            $this->assertTrue($converted->contains('datetime', $this->testLocaleResult));
+        }
+
+        $converted = timezone()->convertCollectionToStorage($converted, $this->testColumns);
+
+        for ($i = 0; $i < $converted->count(); $i++) {
+            $this->assertTrue($converted->contains('timestamp', $this->testUTC));
+            $this->assertTrue($converted->contains('datetime', $this->testUTC));
+        }
     }
 
     /** @test */

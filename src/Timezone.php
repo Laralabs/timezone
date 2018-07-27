@@ -140,7 +140,7 @@ class Timezone implements TimezoneInterface
 
             return $collection->map(function ($item) use ($properties) {
                 if ($item instanceof Model) {
-                    $params['columns'] = array_merge($properties['columns'], $item->getDates());
+                    $properties['columns'] = array_merge($properties['columns'], $item->getDates());
                 }
                 foreach ($properties['columns'] as $column) {
                     if (\is_array($item)) {

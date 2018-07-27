@@ -19,7 +19,7 @@ abstract class TestCase extends Orchestra
     /** @var array */
     protected $testColumns = ['datetime'];
 
-    /** @var string  */
+    /** @var string */
     protected $testFormat = 'Y-m-d H:i:s';
 
     /** @var string */
@@ -28,8 +28,20 @@ abstract class TestCase extends Orchestra
     /** @var string */
     protected $testEuropeLondon = '2018-07-25 14:00:00';
 
-    /** @var string  */
+    /** @var string */
     protected $testUKParse = '25/07/2018 14:00:00';
+
+    /** @var string */
+    protected $testUKFormat = 'd/m/Y H:i:s';
+
+    /** @var string */
+    protected $testLocale = 'nl';
+
+    /** @var string */
+    protected $testLocaleFormat = 'l j F Y H:i:s';
+
+    /** @var string */
+    protected $testLocaleResult = 'woensdag 25 juli 2018 14:00:00';
 
     public function setUp(): void
     {
