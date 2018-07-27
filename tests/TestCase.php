@@ -4,6 +4,7 @@ namespace Laralabs\Timezone\Tests;
 
 use Dotenv\Dotenv;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Jenssegers\Date\Date;
 use Laralabs\Timezone\Tests\Model\TestModel;
@@ -96,7 +97,7 @@ abstract class TestCase extends Orchestra
         ]);
     }
 
-    protected function getExpectedTestArray(): array
+    protected function getExpectedTestArray(): Collection
     {
         return collect([
             [
