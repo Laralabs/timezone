@@ -87,18 +87,19 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
+     * Converts timestamps or specified columns to storage
+     * from display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
      * @param array                               $columns
+     * @param null|string|array                   $format
      * @param null|string                         $fromTimezone
      *
      * @return \Illuminate\Support\Collection
      */
-    public function convertCollectionToStorage($collection = null, array $columns = [], $fromTimezone = null): Collection
+    public function convertCollectionToStorage($collection = null, array $columns = [], $format = null, $fromTimezone = null): Collection
     {
-        return $this->convertCollection($collection, $columns, 'to', $fromTimezone);
+        return $this->convertCollection($collection, $columns, ['direction' => 'to', 'format' => $format, 'timezone' => $fromTimezone]);
     }
 
     /**
@@ -107,13 +108,14 @@ class Timezone implements TimezoneInterface
      *
      * @param null|\Illuminate\Support\Collection $collection
      * @param array                               $columns
+     * @param null|string|array                   $format
      * @param null|string                         $toTimezone
      *
      * @return \Illuminate\Support\Collection
      */
-    public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): Collection
+    public function convertCollectionFromStorage($collection = null, array $columns = [], $format = null, $toTimezone = null): Collection
     {
-        return $this->convertCollection($collection, $columns, 'from', $toTimezone);
+        return $this->convertCollection($collection, $columns, ['direction' => 'from', 'format' => $format, 'timezone' => $toTimezone]);
     }
 
     /**
@@ -122,32 +124,50 @@ class Timezone implements TimezoneInterface
      *
      * @param $collection
      * @param $columns
-     * @param string $direction
-     * @param null $timezone
+     * @param array $properties
      * @return Collection
      */
-    protected function convertCollection($collection, $columns, $direction = 'from', $timezone = null): Collection
+    protected function convertCollection($collection, $columns, array $properties): Collection
     {
         if ($collection instanceof Collection) {
-            if ($timezone === null) {
-                $timezone = $this->displayTimezone;
+            if (isset($properties['timezone']) && $properties['timezone'] === null) {
+                $properties['timezone'] = $this->displayTimezone;
             }
-            $params = ['columns' => $columns, 'direction' => $direction, 'timezone' => $timezone];
+            if (\is_array($properties['format']) && \count($properties['format']) !== 2) {
+                throw new \InvalidArgumentException('Argument 3 $format should contain format and locale when specified as an array.');
+            }
+            $properties['columns'] = $columns;
 
-            return $collection->map(function ($item) use ($params) {
+            return $collection->map(function ($item) use ($properties) {
                 if ($item instanceof Model) {
-                    $params['columns'] = array_merge($params['columns'], $item->getDates());
+                    $params['columns'] = array_merge($properties['columns'], $item->getDates());
                 }
-                foreach ($params['columns'] as $column) {
+                foreach ($properties['columns'] as $column) {
                     if (\is_array($item)) {
-                        $item[$column] = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item[$column], $params['timezone']) : $this->convertToStorage($item[$column], $params['timezone']);
+                        $item[$column] = (string)$properties['direction'] === 'from' ? $this->convertFromStorage($item[$column], $properties['timezone']) : $this->convertToStorage($item[$column], $properties['timezone']);
                         if ($item[$column] instanceof TimezoneDate) {
-                            //$item[$column] = $item[$column]->formatDefault();
+                            if ($properties['format'] !== null) {
+                                if (\is_array($properties['format'])) {
+                                    $item[$column] = $item[$column]->formatToLocale($properties['format'][0], $properties['format'][1]);
+                                } else {
+                                    $item[$column] = $item[$column]->format($properties['format']);
+                                }
+                            } else {
+                                $item[$column] = $item[$column]->formatDefault();
+                            }
                         }
                     } else {
-                        $item->$column = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item->$column, $params['timezone']) : $this->convertToStorage($item->$column, $params['timezone']);
+                        $item->$column = (string)$properties['direction'] === 'from' ? $this->convertFromStorage($item->$column, $properties['timezone']) : $this->convertToStorage($item->$column, $properties['timezone']);
                         if ($item->$column instanceof TimezoneDate) {
-                            //$item->$column = $item->$column->formatDefault();
+                            if ($properties['format'] !== null) {
+                                if (\is_array($properties['format'])) {
+                                    $item->$column = $item->$column->formatToLocale($properties['format'][0], $properties['format'][1]);
+                                } else {
+                                    $item->$column = $item->$column->format($properties['format']);
+                                }
+                            } else {
+                                $item->$column = $item->$column->formatDefault();
+                            }
                         }
                     }
                 }

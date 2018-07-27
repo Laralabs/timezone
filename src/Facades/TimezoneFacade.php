@@ -35,18 +35,19 @@ class TimezoneFacade implements TimezoneInterface
     }
 
     /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
+     * Converts timestamps or specified columns to storage
+     * from display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
      * @param array                               $columns
+     * @param null|string|array                   $format
      * @param null|string                         $fromTimezone
      *
      * @return \Illuminate\Support\Collection
      */
-    public function convertCollectionToStorage($collection = null, array $columns = [], $fromTimezone = null): Collection
+    public function convertCollectionToStorage($collection = null, array $columns = [], $format = null, $fromTimezone = null): Collection
     {
-        return app('timezone')->convertCollectionToStorage($collection, $columns, $fromTimezone);
+        return app('timezone')->convertCollectionToStorage($collection, $columns, $format, $fromTimezone);
     }
 
     /**
@@ -55,13 +56,14 @@ class TimezoneFacade implements TimezoneInterface
      *
      * @param null|\Illuminate\Support\Collection $collection
      * @param array                               $columns
+     * @param null|string|array                   $format
      * @param null|string                         $toTimezone
      *
      * @return \Illuminate\Support\Collection
      */
-    public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): Collection
+    public function convertCollectionFromStorage($collection = null, array $columns = [], $format = null, $toTimezone = null): Collection
     {
-        return app('timezone')->convertCollectionFromStorage($collection, $columns, $toTimezone);
+        return app('timezone')->convertCollectionFromStorage($collection, $columns, $format, $toTimezone);
     }
 
     /**

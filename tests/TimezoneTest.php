@@ -136,6 +136,14 @@ class TimezoneTest extends TestCase
     }
     
     /** @test */
+    public function it_throws_exception_when_format_array_invalid(): void
+    {
+        $this->expectExceptionMessage('Argument 3 $format should contain format and locale when specified as an array.');
+        
+        timezone()->convertCollectionFromStorage(TestModel::all(), $this->testColumns, [$this->testFormat]);
+    }
+    
+    /** @test */
     public function it_converts_collection_of_arrays(): void
     {
         $collection = TestModel::all()->toArray();
