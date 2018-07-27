@@ -24,7 +24,7 @@ abstract class TestCase extends Orchestra
     /** @var string */
     protected $testEuropeLondon = '2018-07-25 14:00:00';
 
-    /** @var string  */
+    /** @var string */
     protected $testUKParse = '25/07/2018 14:00:00';
 
     public function setUp(): void
@@ -100,14 +100,14 @@ abstract class TestCase extends Orchestra
     {
         return collect([
             [
-                'name' => 'Test Model',
+                'name'      => 'Test Model',
                 'timestamp' => $this->testEuropeLondon,
-                'datetime' => $this->testEuropeLondon,
+                'datetime'  => $this->testEuropeLondon,
             ],
             [
-                'name' => 'Test Model 2',
+                'name'      => 'Test Model 2',
                 'timestamp' => $this->testEuropeLondon,
-                'datetime' => $this->testEuropeLondon,
+                'datetime'  => $this->testEuropeLondon,
             ],
         ]);
     }
