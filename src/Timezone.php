@@ -3,6 +3,7 @@
 namespace Laralabs\Timezone;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
@@ -194,6 +195,9 @@ class Timezone implements TimezoneInterface
         }
         if (\is_int($date)) {
             $date = date('Y-m-d H:i:s', $date);
+        }
+        if ($date instanceof Carbon) {
+            $date = $date->format('Y-m-d H:i:s');
         }
         if ($this->parseUK) {
             $date = $this->formatUKDate($date);

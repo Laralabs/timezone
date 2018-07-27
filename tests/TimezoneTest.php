@@ -137,7 +137,7 @@ class TimezoneTest extends TestCase
         $converted = timezone()->convertCollectionFromStorage($collection, $this->testColumns, $this->testUKFormat);
 
         for ($i = 0; $i < $converted->count(); $i++) {
-            $this->assertTrue($converted->contains('timestamp', $this->testUKParse));
+            $this->assertTrue($converted->contains('timestamp', $this->testEuropeLondon));
             $this->assertTrue($converted->contains('datetime', $this->testUKParse));
         }
 
@@ -160,7 +160,7 @@ class TimezoneTest extends TestCase
         $converted = timezone()->convertCollectionFromStorage($collection, $this->testColumns, [$this->testLocaleFormat, $this->testLocale]);
 
         for ($i = 0; $i < $converted->count(); $i++) {
-            $this->assertTrue($converted->contains('timestamp', $this->testLocaleResult));
+            $this->assertTrue($converted->contains('timestamp', $this->testEuropeLondon));
             $this->assertTrue($converted->contains('datetime', $this->testLocaleResult));
         }
 
