@@ -12,6 +12,11 @@ class TimezoneDate extends Date
     protected static $currentLocale;
 
     /**
+     * @var \Illuminate\Config\Repository|mixed
+     */
+    protected $defaultFormat;
+
+    /**
      * Date constructor.
      *
      * @param null|string $time
@@ -22,6 +27,7 @@ class TimezoneDate extends Date
         parent::__construct($time, $timezone);
 
         static::$currentLocale = static::getLocale();
+        $this->defaultFormat = config('timezone.format');
     }
 
     /**
@@ -41,5 +47,15 @@ class TimezoneDate extends Date
         static::setLocale(static::$currentLocale);
 
         return $date;
+    }
+
+    /**
+     * Formats date to the default config format.
+     *
+     * @return mixed|string
+     */
+    public function formatDefault()
+    {
+        return $this->format($this->defaultFormat);
     }
 }

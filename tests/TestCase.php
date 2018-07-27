@@ -19,6 +19,9 @@ abstract class TestCase extends Orchestra
     /** @var array */
     protected $testColumns = ['datetime'];
 
+    /** @var string  */
+    protected $testFormat = 'Y-m-d H:i:s';
+
     /** @var string */
     protected $testUTC = '2018-07-25 13:00:00';
 

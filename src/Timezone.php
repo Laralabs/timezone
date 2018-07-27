@@ -27,6 +27,11 @@ class Timezone implements TimezoneInterface
     /**
      * @var \Illuminate\Config\Repository|mixed
      */
+    protected $defaultFormat;
+
+    /**
+     * @var \Illuminate\Config\Repository|mixed
+     */
     protected $parseUK;
 
     public function __construct()
@@ -34,6 +39,7 @@ class Timezone implements TimezoneInterface
         $this->date = new TimezoneDate();
         $this->storageTimezone = config('app.timezone');
         $this->displayTimezone = config('timezone.timezone');
+        $this->defaultFormat = config('timezone.format');
         $this->parseUK = config('timezone.parse_uk_dates') || env('TIMEZONE_UK', false);
     }
 
@@ -124,9 +130,9 @@ class Timezone implements TimezoneInterface
     {
         if ($collection instanceof Collection) {
             if ($timezone === null) {
-                $timezone = $direction === 'from' ? $this->displayTimezone : $this->storageTimezone;
+                $timezone = (string)$direction === 'from' ? $this->displayTimezone : $this->storageTimezone;
             }
-            $params = ['direction' => $direction, 'columns' => $columns, 'timezone' => $timezone];
+            $params = ['columns' => $columns, 'direction' => $direction, 'timezone' => $timezone];
 
             return $collection->map(function ($item) use ($params) {
                 if ($item instanceof Model) {
@@ -134,9 +140,15 @@ class Timezone implements TimezoneInterface
                 }
                 foreach ($params['columns'] as $column) {
                     if (\is_array($item)) {
-                        $item[$column] = $params['direction'] === 'from' ? $this->convertFromStorage($item[$column], $params['timezone']) : $this->convertToStorage($item[$column], $params['timezone']);
+                        $item[$column] = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item[$column], $params['timezone']) : $this->convertToStorage($item[$column], $params['timezone']);
+                        if ($item[$column] instanceof TimezoneDate) {
+                            $item[$column] = $item[$column]->formatDefault();
+                        }
                     } else {
-                        $item->$column = $params['direction'] === 'from' ? $this->convertFromStorage($item->$column, $params['timezone']) : $this->convertToStorage($item->$column, $params['timezone']);
+                        $item->$column = (string)$params['direction'] === 'from' ? $this->convertFromStorage($item->$column, $params['timezone']) : $this->convertToStorage($item->$column, $params['timezone']);
+                        if ($item->$column instanceof TimezoneDate) {
+                            $item->$column = $item->$column->formatDefault();
+                        }
                     }
                 }
 
