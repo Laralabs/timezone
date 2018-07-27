@@ -99,6 +99,8 @@ class Timezone implements TimezoneInterface
                         $item->$column = $this->convertToStorage($item->$column, $params['fromTimezone']);
                     }
                 }
+
+                return $item;
             });
         }
 
@@ -132,6 +134,8 @@ class Timezone implements TimezoneInterface
                         $item->$column = $this->convertFromStorage($item->$column, $params['toTimezone']);
                     }
                 }
+
+                return $item;
             });
         }
 
