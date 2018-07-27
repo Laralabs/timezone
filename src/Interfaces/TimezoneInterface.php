@@ -11,6 +11,7 @@ interface TimezoneInterface
      *
      * @param null $date
      * @param null $fromTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate;
@@ -20,6 +21,7 @@ interface TimezoneInterface
      *
      * @param null $date
      * @param null $toTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate;
@@ -29,8 +31,8 @@ interface TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $fromTimezone
+     * @param array                               $columns
+     * @param null|string                         $fromTimezone
      *
      * @return \Illuminate\Support\Collection
      */
@@ -41,8 +43,8 @@ interface TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $toTimezone
+     * @param array                               $columns
+     * @param null|string                         $toTimezone
      *
      * @return \Illuminate\Support\Collection
      */

@@ -15,13 +15,13 @@ abstract class TestCase extends Orchestra
     /** @var \Laralabs\Timezone\Tests\Model\TestModel */
     protected $testModel;
 
-    /** @var array  */
+    /** @var array */
     protected $testColumns = ['datetime'];
 
-    /** @var string  */
+    /** @var string */
     protected $testUTC = '2018-07-25 13:00:00';
 
-    /** @var string  */
+    /** @var string */
     protected $testEuropeLondon = '2018-07-25 14:00:00';
 
     public function setUp(): void
@@ -55,7 +55,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageProviders($app): array
     {
         return [
-            TimezoneServiceProvider::class
+            TimezoneServiceProvider::class,
         ];
     }
 
@@ -63,9 +63,9 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('database.default', 'sqlite');
         $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => ':memory:',
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         $app['config']->set('app.key', 'XUec80T87lfeD41mWUaji7JJlEv7CEhSXcvtHkLu3Nw=');
@@ -81,15 +81,15 @@ abstract class TestCase extends Orchestra
         });
 
         TestModel::create([
-            'name' => 'Test Model',
+            'name'      => 'Test Model',
             'timestamp' => $this->testUTC,
-            'datetime' => $this->testUTC
+            'datetime'  => $this->testUTC,
         ]);
 
         TestModel::create([
-            'name' => 'Test Model 2',
+            'name'      => 'Test Model 2',
             'timestamp' => $this->testUTC,
-            'datetime' => $this->testUTC
+            'datetime'  => $this->testUTC,
         ]);
     }
 }

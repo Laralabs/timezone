@@ -13,6 +13,7 @@ class TimezoneFacade implements TimezoneInterface
      *
      * @param null $date
      * @param null $fromTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate
@@ -25,6 +26,7 @@ class TimezoneFacade implements TimezoneInterface
      *
      * @param null $date
      * @param null $toTimezone
+     *
      * @return TimezoneDate|null
      */
     public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate
@@ -37,8 +39,8 @@ class TimezoneFacade implements TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $fromTimezone
+     * @param array                               $columns
+     * @param null|string                         $fromTimezone
      *
      * @return \Illuminate\Support\Collection
      */
@@ -52,8 +54,8 @@ class TimezoneFacade implements TimezoneInterface
      * to display timezone.
      *
      * @param null|\Illuminate\Support\Collection $collection
-     * @param array $columns
-     * @param null|string $toTimezone
+     * @param array                               $columns
+     * @param null|string                         $toTimezone
      *
      * @return \Illuminate\Support\Collection
      */
@@ -61,7 +63,6 @@ class TimezoneFacade implements TimezoneInterface
     {
         return app('timezone')->convertCollectionFromStorage($collection, $columns, $toTimezone);
     }
-
 
     /**
      * Returns array of PHP timezones.
