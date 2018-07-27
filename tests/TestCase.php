@@ -95,4 +95,20 @@ abstract class TestCase extends Orchestra
             'datetime'  => $this->testUTC,
         ]);
     }
+
+    protected function getExpectedTestArray(): array
+    {
+        return collect([
+            [
+                'name' => 'Test Model',
+                'timestamp' => $this->testEuropeLondon,
+                'datetime' => $this->testEuropeLondon,
+            ],
+            [
+                'name' => 'Test Model 2',
+                'timestamp' => $this->testEuropeLondon,
+                'datetime' => $this->testEuropeLondon,
+            ],
+        ]);
+    }
 }

@@ -92,29 +92,7 @@ class Timezone implements TimezoneInterface
      */
     public function convertCollectionToStorage($collection = null, array $columns = [], $fromTimezone = null): Collection
     {
-        if ($collection instanceof Collection) {
-            if (!$fromTimezone) {
-                $fromTimezone = $this->displayTimezone;
-            }
-            $params = ['columns' => $columns, 'fromTimezone' => $fromTimezone];
-
-            return $collection->map(function ($item) use ($params) {
-                if ($item instanceof Model) {
-                    $params['columns'] = array_merge($params['columns'], $item->getDates());
-                }
-                foreach ($params['columns'] as $column) {
-                    if (\is_array($item)) {
-                        $item[$column] = $this->convertToStorage($item[$column], $params['fromTimezone']);
-                    } else {
-                        $item->$column = $this->convertToStorage($item->$column, $params['fromTimezone']);
-                    }
-                }
-
-                return $item;
-            });
-        }
-
-        throw new \InvalidArgumentException('A valid collection must be specified.');
+        return $this->convertCollection($collection, $columns, 'to', $fromTimezone);
     }
 
     /**
@@ -129,11 +107,26 @@ class Timezone implements TimezoneInterface
      */
     public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): Collection
     {
+        return $this->convertCollection($collection, $columns, 'from', $toTimezone);
+    }
+
+    /**
+     * Converts $dates or specified columns
+     * throughout a collection.
+     *
+     * @param $collection
+     * @param $columns
+     * @param string $direction
+     * @param null $timezone
+     * @return Collection
+     */
+    protected function convertCollection($collection, $columns, $direction = 'from', $timezone = null): Collection
+    {
         if ($collection instanceof Collection) {
-            if (!$toTimezone) {
-                $toTimezone = $this->displayTimezone;
+            if ($timezone === null) {
+                $timezone = $direction === 'from' ? $this->displayTimezone : $this->storageTimezone;
             }
-            $params = ['columns' => $columns, 'toTimezone' => $toTimezone];
+            $params = ['direction' => $direction, 'columns' => $columns, 'timezone' => $timezone];
 
             return $collection->map(function ($item) use ($params) {
                 if ($item instanceof Model) {
@@ -141,9 +134,9 @@ class Timezone implements TimezoneInterface
                 }
                 foreach ($params['columns'] as $column) {
                     if (\is_array($item)) {
-                        $item[$column] = $this->convertFromStorage($item[$column], $params['toTimezone']);
+                        $item[$column] = $params['direction'] === 'from' ? $this->convertFromStorage($item[$column], $params['timezone']) : $this->convertToStorage($item[$column], $params['timezone']);
                     } else {
-                        $item->$column = $this->convertFromStorage($item->$column, $params['toTimezone']);
+                        $item->$column = $params['direction'] === 'from' ? $this->convertFromStorage($item->$column, $params['timezone']) : $this->convertToStorage($item->$column, $params['timezone']);
                     }
                 }
 
@@ -166,6 +159,9 @@ class Timezone implements TimezoneInterface
     {
         if (!$timezone) {
             $timezone = $this->storageTimezone;
+        }
+        if (\is_int($date)) {
+            $date = date('Y-m-d H:i:s', $date);
         }
         if ($this->parseUK) {
             $date = $this->formatUKDate($date);

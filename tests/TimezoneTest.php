@@ -121,9 +121,29 @@ class TimezoneTest extends TestCase
         $converted = timezone()->convertToStorage($this->testUKParse);
 
         $this->assertEquals($this->testUTC, $converted);
-        
+
         $convertedBack = timezone()->convertFromStorage($converted)->format('d/m/Y H:i:s');
 
         $this->assertEquals($this->testUKParse, $convertedBack);
+    }
+
+    /** @test */
+    public function it_throws_exception_when_no_collection_passed(): void
+    {
+        $this->expectExceptionMessage('A valid collection must be specified.');
+
+        timezone()->convertCollectionFromStorage([]);
+    }
+    
+    /** @test */
+    public function it_converts_collection_of_arrays(): void
+    {
+        $collection = TestModel::all()->toArray();
+
+        $converted = timezone()->convertCollectionFromStorage(collect($collection));
+
+        $intended = $this->getExpectedTestArray();
+
+        $this->assertEquals($intended, $converted);
     }
 }
