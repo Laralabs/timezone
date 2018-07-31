@@ -24,7 +24,7 @@ class TestModelPresenter extends Model
     ];
 
     protected $timezoneDates = [
-        'datetime' => 'd/m/Y H:i:s',
-        'timestamp' => ['l j F Y H:i:s', 'nl']
+        'datetime'  => 'd/m/Y H:i:s',
+        'timestamp' => ['l j F Y H:i:s', 'nl'],
     ];
 }

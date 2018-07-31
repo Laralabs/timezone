@@ -119,16 +119,16 @@ abstract class TestCase extends Orchestra
     {
         return collect([
             [
-                'name' => 'Test Model',
+                'name'      => 'Test Model',
                 'timestamp' => $this->testEuropeLondon,
-                'datetime' => $this->testEuropeLondon,
-                'id' => 1
+                'datetime'  => $this->testEuropeLondon,
+                'id'        => 1,
             ],
             [
-                'name' => 'Test Model 2',
+                'name'      => 'Test Model 2',
                 'timestamp' => $this->testEuropeLondon,
-                'datetime' => $this->testEuropeLondon,
-                'id' => 2
+                'datetime'  => $this->testEuropeLondon,
+                'id'        => 2,
             ],
         ]);
     }
