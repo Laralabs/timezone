@@ -247,4 +247,34 @@ class TimezoneTest extends TestCase
 
         $this->assertInstanceOf(TimezonePresenter::class, $model->timezone()->datetime);
     }
+
+    /** @test */
+    public function presenter_throws_exception_when_property_not_defined_in_array(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $this->expectExceptionMessage('Property test not found in '.\get_class($model).'::$timezoneDates');
+
+        $model->timezone()->test->display();
+    }
+
+    /** @test */
+    public function presenter_throws_exception_when_no_property_specified(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $this->expectExceptionMessage('Please specify a property before attempting to convert it');
+
+        $model->timezone()->display();
+    }
+
+    /** @test */
+    public function presenter_it_formats_date_to_format_and_locale_specified_in_array(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $converted = $model->timezone()->timestamp->display();
+
+        $this->assertEquals($this->testLocaleResult, $converted);
+    }
 }
