@@ -10,8 +10,9 @@ trait HasTimezonePresenter
     protected $timezonePresenter;
 
     /**
-     * @return TimezonePresenter
      * @throws TimezonePresenterException
+     *
+     * @return TimezonePresenter
      */
     public function timezone()
     {

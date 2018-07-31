@@ -121,6 +121,7 @@ class Timezone implements TimezoneInterface
      * @param $collection
      * @param $columns
      * @param array $properties
+     *
      * @return Collection
      */
     protected function convertCollection($collection, $columns, array $properties): Collection
@@ -140,7 +141,7 @@ class Timezone implements TimezoneInterface
                 }
                 foreach ($properties['columns'] as $column) {
                     if (\is_array($item)) {
-                        $item[$column] = (string)$properties['direction'] === 'from' ? $this->convertFromStorage($item[$column], $properties['timezone']) : $this->convertToStorage($item[$column], $properties['timezone']);
+                        $item[$column] = (string) $properties['direction'] === 'from' ? $this->convertFromStorage($item[$column], $properties['timezone']) : $this->convertToStorage($item[$column], $properties['timezone']);
                         if ($item[$column] instanceof TimezoneDate) {
                             if ($properties['format'] !== null) {
                                 if (\is_array($properties['format'])) {
@@ -153,7 +154,7 @@ class Timezone implements TimezoneInterface
                             }
                         }
                     } else {
-                        $item->$column = (string)$properties['direction'] === 'from' ? $this->convertFromStorage($item->$column, $properties['timezone']) : $this->convertToStorage($item->$column, $properties['timezone']);
+                        $item->$column = (string) $properties['direction'] === 'from' ? $this->convertFromStorage($item->$column, $properties['timezone']) : $this->convertToStorage($item->$column, $properties['timezone']);
                         if ($item->$column instanceof TimezoneDate) {
                             if ($properties['format'] !== null) {
                                 if (\is_array($properties['format'])) {

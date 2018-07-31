@@ -54,6 +54,7 @@ class TimezonePresenter extends Presenter
 
     /**
      * @param $property
+     *
      * @return bool
      */
     public function __isset($property)
@@ -63,8 +64,10 @@ class TimezonePresenter extends Presenter
 
     /**
      * @param $property
-     * @return $this
+     *
      * @throws TimezonePresenterException
+     *
+     * @return $this
      */
     public function __get($property)
     {
@@ -77,6 +80,7 @@ class TimezonePresenter extends Presenter
                     $this->displayFormat = $this->displayFormat[0];
                 }
             }
+
             return $this;
         }
 
@@ -86,8 +90,10 @@ class TimezonePresenter extends Presenter
     /**
      * @param $property
      * @param $value
-     * @return Model
+     *
      * @throws TimezonePresenterException
+     *
+     * @return Model
      */
     public function __set($property, $value)
     {
@@ -109,8 +115,10 @@ class TimezonePresenter extends Presenter
      * @param string|null $format
      * @param string|null $locale
      * @param string|null $toTimezone
-     * @return mixed
+     *
      * @throws TimezonePresenterException
+     *
+     * @return mixed
      */
     public function display(string $format = null, string $locale = null, string $toTimezone = null)
     {
@@ -119,6 +127,7 @@ class TimezonePresenter extends Presenter
             $format = $format ?? $this->displayFormat;
             $locale = $locale ?? $this->locale;
             $timezone = $toTimezone ?? $this->displayTimezone;
+
             return timezone()->convertFromStorage($this->model->$property, $timezone)->formatToLocale($format, $locale);
         }
 
