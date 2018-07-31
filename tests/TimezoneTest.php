@@ -235,7 +235,7 @@ class TimezoneTest extends TestCase
     {
         $model = TestModel::first();
 
-        $this->expectExceptionMessage('Property $timezoneDates is not set correctly in '.get_class($this));
+        $this->expectExceptionMessage('Property $timezoneDates is not set correctly in '.\get_class($model));
 
         $model->timezone();
     }
