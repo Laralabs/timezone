@@ -144,6 +144,33 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
+    public function it_accepts_unix_timestamp(): void
+    {
+        $converted = timezone()->convertFromStorage(strtotime($this->testUTC));
+
+        $this->assertEquals($this->testEuropeLondon, $converted);
+    }
+
+    /** @test */
+    public function it_accepts_date_and_keeps_utc_timezone(): void
+    {
+        $converted = timezone()->convertFromStorage($this->testDate);
+
+        $this->assertEquals($this->testDate, $converted);
+        $this->assertEquals('UTC', $converted->timezone);
+    }
+
+    /** @test */
+    public function it_accepts_carbon_instance(): void
+    {
+        $model = TestModel::first();
+
+        $converted = timezone()->convertFromStorage($model->timestamp);
+
+        $this->assertEquals($this->testEuropeLondon, $converted);
+    }
+
+    /** @test */
     public function it_converts_collection_from_storage_and_back_with_string_format(): void
     {
         Config::set('timezone.parse_uk_dates', true);
@@ -249,13 +276,23 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
-    public function presenter_throws_exception_when_property_not_defined_in_array(): void
+    public function presenter_get_throws_exception_when_property_not_defined_in_array(): void
     {
         $model = TestModelPresenter::first();
 
         $this->expectExceptionMessage('Property test not found in '.\get_class($model).'::$timezoneDates');
 
         $model->timezone()->test->display();
+    }
+
+    /** @test */
+    public function presenter_set_throws_exception_when_property_not_defined_in_array(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $this->expectExceptionMessage('Property test not found in '.\get_class($model).'::$timezoneDates');
+
+        $model->timezone()->test = $this->testUTC;
     }
 
     /** @test */
@@ -269,12 +306,19 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
-    public function presenter_it_formats_date_to_format_and_locale_specified_in_array(): void
+    public function presenter_it_displays_to_format_and_locale_specified_in_array_and_back(): void
     {
         $model = TestModelPresenter::first();
 
         $converted = $model->timezone()->timestamp->display();
 
         $this->assertEquals($this->testLocaleResult, $converted);
+
+        Date::setLocale($this->testLocale);
+
+        $model->timezone()->timestamp = $converted;
+        $this->assertEquals($this->testUTC, $model->timestamp);
+
+        Date::setLocale('en');
     }
 }
