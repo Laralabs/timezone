@@ -2,7 +2,9 @@
 
 namespace Laralabs\Timezone\Tests;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Jenssegers\Date\Date;
@@ -154,7 +156,8 @@ class TimezoneTest extends TestCase
     /** @test */
     public function it_accepts_date_and_keeps_utc_timezone(): void
     {
-        $converted = timezone()->convertFromStorage($this->testDate);
+        Config::set('timezone.parse_uk_dates', true);
+        $converted = timezone()->convertFromStorage($this->testDate)->format('d/m/Y');
 
         $this->assertEquals($this->testDate, $converted);
         $this->assertEquals('UTC', $converted->timezone);
@@ -165,8 +168,10 @@ class TimezoneTest extends TestCase
     {
         $model = TestModel::first();
 
-        $converted = timezone()->convertFromStorage($model->timestamp);
+        $carbon = $model->timestamp;
+        $this->assertInstanceOf(Carbon::class, $carbon);
 
+        $converted = timezone()->convertFromStorage($carbon);
         $this->assertEquals($this->testEuropeLondon, $converted);
     }
 
@@ -314,11 +319,11 @@ class TimezoneTest extends TestCase
 
         $this->assertEquals($this->testLocaleResult, $converted);
 
-        Date::setLocale($this->testLocale);
+        App::setLocale($this->testLocale);
 
         $model->timezone()->timestamp = $converted;
         $this->assertEquals($this->testUTC, $model->timestamp);
 
-        Date::setLocale('en');
+        App::setLocale('en');
     }
 }
