@@ -160,7 +160,8 @@ class TimezoneTest extends TestCase
         $converted = timezone()->convertFromStorage($this->testDate);
 
         $this->assertEquals($this->testDate, $converted->format('d/m/Y'));
-        $this->assertEquals('UTC', $converted->timezone);
+        $timezone = new \DateTimeZone('UTC');
+        $this->assertEquals($timezone, $converted->timezone);
     }
 
     /** @test */
