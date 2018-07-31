@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Jenssegers\Date\Date;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
 
 class Timezone implements TimezoneInterface
@@ -59,7 +60,7 @@ class Timezone implements TimezoneInterface
         }
         $date = $this->createDate($date, $fromTimezone);
 
-        $date->timezone = $this->storageTimezone;
+        $date->timezone($this->storageTimezone);
 
         return $date;
     }
@@ -82,7 +83,7 @@ class Timezone implements TimezoneInterface
         }
         $date = $this->createDate($date);
 
-        $date->timezone = $toTimezone;
+        $date->timezone($toTimezone);
 
         return $date;
     }
@@ -188,7 +189,7 @@ class Timezone implements TimezoneInterface
      *
      * @return TimezoneDate
      */
-    protected function createDate($date = null, $timezone = null): TimezoneDate
+    protected function createDate($date = null, $timezone = null): Date
     {
         if (!$timezone) {
             $timezone = $this->storageTimezone;
@@ -206,7 +207,7 @@ class Timezone implements TimezoneInterface
             $timezone = $this->storageTimezone;
         }
 
-        return new $this->date($date, $timezone);
+        return TimezoneDate::parse($date, $timezone);
     }
 
     /**
@@ -287,7 +288,7 @@ class Timezone implements TimezoneInterface
      *
      * @return bool
      */
-    protected function isTimestamp($date): bool
+    public function isTimestamp($date): bool
     {
         return strpos($date, ':') ? true : false;
     }
