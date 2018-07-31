@@ -5,6 +5,7 @@ namespace Laralabs\Timezone\Tests;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use Jenssegers\Date\Date;
 use Laralabs\Timezone\Tests\Model\TestModel;
 use Laralabs\Timezone\Timezone;
 
@@ -153,6 +154,7 @@ class TimezoneTest extends TestCase
     public function it_converts_collection_from_storage_and_back_with_array_locale_format(): void
     {
         Config::set('timezone.parse_uk_dates', true);
+        Date::setLocale($this->testLocale);
         $collection = TestModel::all();
 
         $this->assertInstanceOf(Collection::class, $collection);
@@ -170,6 +172,8 @@ class TimezoneTest extends TestCase
             $this->assertTrue($converted->contains('timestamp', $this->testUTC));
             $this->assertTrue($converted->contains('datetime', $this->testUTC));
         }
+        
+        Date::setLocale('en');
     }
 
     /** @test */
