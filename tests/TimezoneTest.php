@@ -157,9 +157,9 @@ class TimezoneTest extends TestCase
     public function it_accepts_date_and_keeps_utc_timezone(): void
     {
         Config::set('timezone.parse_uk_dates', true);
-        $converted = timezone()->convertFromStorage($this->testDate)->format('d/m/Y');
+        $converted = timezone()->convertFromStorage($this->testDate);
 
-        $this->assertEquals($this->testDate, $converted);
+        $this->assertEquals($this->testDate, $converted->format('d/m/Y'));
         $this->assertEquals('UTC', $converted->timezone);
     }
 
