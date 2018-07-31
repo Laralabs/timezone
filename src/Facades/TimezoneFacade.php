@@ -75,4 +75,16 @@ class TimezoneFacade implements TimezoneInterface
     {
         return app('timezone')->getTimezones();
     }
+
+    /**
+     * Check if given date is a timestamp.
+     *
+     * @param $date
+     *
+     * @return bool
+     */
+    public function isTimestamp($date): bool
+    {
+        return app('timezone')->isTimestamp($date);
+    }
 }

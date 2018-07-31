@@ -5,7 +5,7 @@ namespace Laralabs\Timezone\Tests\Model;
 use Illuminate\Database\Eloquent\Model;
 use Laralabs\Timezone\Traits\HasTimezonePresenter;
 
-class TestModel extends Model
+class TestModelPresenter extends Model
 {
     use HasTimezonePresenter;
 
@@ -21,5 +21,10 @@ class TestModel extends Model
 
     protected $dates = [
         'timestamp',
+    ];
+
+    protected $timezoneDates = [
+        'datetime' => 'd/m/Y H:i:s',
+        'timestamp' => ['l j F Y H:i:s', 'nl']
     ];
 }

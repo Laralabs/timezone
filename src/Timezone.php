@@ -12,11 +12,6 @@ use Laralabs\Timezone\Interfaces\TimezoneInterface;
 class Timezone implements TimezoneInterface
 {
     /**
-     * @var \Laralabs\Timezone\TimezoneDate
-     */
-    protected $date;
-
-    /**
      * @var \Illuminate\Config\Repository|mixed
      */
     protected $storageTimezone;
@@ -38,7 +33,6 @@ class Timezone implements TimezoneInterface
 
     public function __construct()
     {
-        $this->date = new TimezoneDate();
         $this->storageTimezone = config('app.timezone');
         $this->displayTimezone = config('timezone.timezone');
         $this->defaultFormat = config('timezone.format');

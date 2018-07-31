@@ -6,7 +6,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use Jenssegers\Date\Date;
+use Laralabs\Timezone\Presenter\TimezonePresenter;
 use Laralabs\Timezone\Tests\Model\TestModel;
+use Laralabs\Timezone\Tests\Model\TestModelPresenter;
 use Laralabs\Timezone\Timezone;
 
 class TimezoneTest extends TestCase
@@ -95,6 +97,20 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
+    public function helper_it_can_check_if_timestamp(): void
+    {
+        $this->assertFalse(timezone()->isTimestamp($this->testDate));
+        $this->assertTrue(timezone()->isTimestamp($this->testUTC));
+    }
+
+    /** @test */
+    public function facade_it_can_check_if_timestamp(): void
+    {
+        $this->assertFalse(\Laralabs\Timezone\Facades\Timezone::isTimestamp($this->testDate));
+        $this->assertTrue(\Laralabs\Timezone\Facades\Timezone::isTimestamp($this->testUTC));
+    }
+
+    /** @test */
     public function it_can_format_to_locale(): void
     {
         $converted = \Laralabs\Timezone\Facades\Timezone::convertFromStorage($this->testUTC)->formatToLocale($this->testLocaleFormat, $this->testLocale);
@@ -172,7 +188,7 @@ class TimezoneTest extends TestCase
             $this->assertTrue($converted->contains('timestamp', $this->testUTC));
             $this->assertTrue($converted->contains('datetime', $this->testUTC));
         }
-        
+
         Date::setLocale('en');
     }
 
@@ -202,5 +218,33 @@ class TimezoneTest extends TestCase
         $intended = $this->getExpectedTestArray();
 
         $this->assertEquals($intended, $converted);
+    }
+
+    /** @test */
+    public function trait_returns_instance_of_timezone_presenter(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $presenter = $model->timezone();
+
+        $this->assertInstanceOf(TimezonePresenter::class, $presenter);
+    }
+
+    /** @test */
+    public function trait_throws_exception_with_no_timezone_dates_array(): void
+    {
+        $model = TestModel::first();
+
+        $this->expectExceptionMessage('Property $timezoneDates is not set correctly in '.get_class($this));
+
+        $model->timezone();
+    }
+
+    /** @test */
+    public function presenter_get_returns_instance_of_presenter(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $this->assertInstanceOf(TimezonePresenter::class, $model->timezone()->datetime);
     }
 }

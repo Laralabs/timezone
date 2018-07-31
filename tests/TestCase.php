@@ -35,6 +35,9 @@ abstract class TestCase extends Orchestra
     protected $testUKFormat = 'd/m/Y H:i:s';
 
     /** @var string */
+    protected $testDate = '25/07/2018';
+
+    /** @var string */
     protected $testLocale = 'nl';
 
     /** @var string */

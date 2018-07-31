@@ -56,4 +56,13 @@ interface TimezoneInterface
      * @return array
      */
     public function getTimezones(): array;
+
+    /**
+     * Check if given date is a timestamp.
+     *
+     * @param $date
+     *
+     * @return bool
+     */
+    public function isTimestamp($date): bool;
 }
