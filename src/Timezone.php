@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 use Jenssegers\Date\Date;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
 
@@ -34,7 +35,7 @@ class Timezone implements TimezoneInterface
     public function __construct()
     {
         $this->storageTimezone = config('app.timezone');
-        $this->displayTimezone = config('timezone.timezone');
+        $this->displayTimezone = Session::has('timezone') ? Session::get('timezone') : config('timezone.timezone');
         $this->defaultFormat = config('timezone.format');
         $this->parseUK = config('timezone.parse_uk_dates') || env('TIMEZONE_UK', false);
     }
