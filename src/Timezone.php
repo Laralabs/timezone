@@ -35,7 +35,7 @@ class Timezone implements TimezoneInterface
     public function __construct()
     {
         $this->storageTimezone = config('app.timezone');
-        $this->displayTimezone = Session::has('timezone') ? Session::get('timezone') : config('timezone.timezone');
+        $this->displayTimezone = session()->has('timezone') ? session()->get('timezone') : config('timezone.timezone');
         $this->defaultFormat = config('timezone.format');
         $this->parseUK = config('timezone.parse_uk_dates') || env('TIMEZONE_UK', false);
     }
@@ -214,11 +214,7 @@ class Timezone implements TimezoneInterface
      */
     public function getCurrentTimezone()
     {
-        if (session()->has('timezone')) {
-            return session()->get('timezone');
-        }
-
-        return null;
+        return $this->displayTimezone;
     }
 
     /**

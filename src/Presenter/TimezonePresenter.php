@@ -46,7 +46,7 @@ class TimezonePresenter extends Presenter
         parent::__construct($model);
 
         $this->dates = $dates;
-        $this->displayTimezone = Session::has('timezone') ? Session::get('timezone') : config('timezone.timezone');
+        $this->displayTimezone = session()->has('timezone') ? session()->get('timezone') : config('timezone.timezone');
         $this->displayFormat = config('timezone.format');
         $this->locale = config('timezone.session_locale') ? Session::get('locale') : App::getLocale();
         Date::setLocale($this->locale);
