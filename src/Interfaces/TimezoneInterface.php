@@ -51,6 +51,14 @@ interface TimezoneInterface
     public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): \Illuminate\Support\Collection;
 
     /**
+     * Get's the current timezone from
+     * the session.
+     *
+     * @return mixed|null
+     */
+    public function getCurrentTimezone();
+
+    /**
      * Returns array of PHP timezones.
      *
      * @return array

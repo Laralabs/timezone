@@ -67,6 +67,17 @@ class TimezoneFacade implements TimezoneInterface
     }
 
     /**
+     * Get's the current timezone from
+     * the session.
+     *
+     * @return mixed|null
+     */
+    public function getCurrentTimezone()
+    {
+        return app('timezone')->getCurrentTimezone();
+    }
+
+    /**
      * Returns array of PHP timezones.
      *
      * @return array

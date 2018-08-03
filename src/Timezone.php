@@ -207,6 +207,21 @@ class Timezone implements TimezoneInterface
     }
 
     /**
+     * Get's the current timezone from
+     * the session.
+     *
+     * @return mixed|null
+     */
+    public function getCurrentTimezone()
+    {
+        if (session()->has('timezone')) {
+            return session()->get('timezone');
+        }
+
+        return null;
+    }
+
+    /**
      * Returns array of PHP timezones.
      *
      * @return array
