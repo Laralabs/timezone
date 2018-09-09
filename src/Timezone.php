@@ -37,7 +37,7 @@ class Timezone implements TimezoneInterface
         $this->storageTimezone = config('app.timezone');
         $this->displayTimezone = session()->has('timezone') ? session()->get('timezone') : config('timezone.timezone');
         $this->defaultFormat = config('timezone.format');
-        $this->parseUK = config('timezone.parse_uk_dates') || env('TIMEZONE_UK', false);
+        $this->parseUK = config('timezone.parse_uk_dates');
     }
 
     /**
@@ -48,7 +48,7 @@ class Timezone implements TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate
+    public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate
     {
         if (!$fromTimezone) {
             $fromTimezone = $this->displayTimezone;
@@ -68,7 +68,7 @@ class Timezone implements TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate
+    public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate
     {
         if (!$toTimezone) {
             $toTimezone = $this->displayTimezone;
@@ -81,100 +81,6 @@ class Timezone implements TimezoneInterface
         $date->timezone($toTimezone);
 
         return $date;
-    }
-
-    /**
-     * Converts timestamps or specified columns to storage
-     * from display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string|array                   $format
-     * @param null|string                         $fromTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionToStorage($collection = null, array $columns = [], $format = null, $fromTimezone = null): Collection
-    {
-        return $this->convertCollection($collection, $columns, ['direction' => 'to', 'format' => $format, 'timezone' => $fromTimezone]);
-    }
-
-    /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string|array                   $format
-     * @param null|string                         $toTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionFromStorage($collection = null, array $columns = [], $format = null, $toTimezone = null): Collection
-    {
-        return $this->convertCollection($collection, $columns, ['direction' => 'from', 'format' => $format, 'timezone' => $toTimezone]);
-    }
-
-    /**
-     * Converts $dates or specified columns
-     * throughout a collection.
-     *
-     * @param $collection
-     * @param $columns
-     * @param array $properties
-     *
-     * @return Collection
-     */
-    protected function convertCollection($collection, $columns, array $properties): Collection
-    {
-        if ($collection instanceof Collection) {
-            if (isset($properties['timezone']) && $properties['timezone'] === null) {
-                $properties['timezone'] = $this->displayTimezone;
-            }
-            if (\is_array($properties['format']) && \count($properties['format']) !== 2) {
-                throw new \InvalidArgumentException('Argument 3 $format should contain format and locale when specified as an array.');
-            }
-            $properties['columns'] = $columns;
-
-            return $collection->map(function ($item) use ($properties) {
-                if ($item instanceof Model) {
-                    $properties['columns'] = array_merge($properties['columns'], $item->getDates());
-                }
-                foreach ($properties['columns'] as $column) {
-                    if (\is_array($item)) {
-                        $item[$column] = (string) $properties['direction'] === 'from' ? $this->convertFromStorage($item[$column], $properties['timezone']) : $this->convertToStorage($item[$column], $properties['timezone']);
-                        if ($item[$column] instanceof TimezoneDate) {
-                            if ($properties['format'] !== null) {
-                                if (\is_array($properties['format'])) {
-                                    $item[$column] = $item[$column]->formatToLocale($properties['format'][0], $properties['format'][1]);
-                                } else {
-                                    $item[$column] = $item[$column]->format($properties['format']);
-                                }
-                            } else {
-                                $item[$column] = $item[$column]->formatDefault();
-                            }
-                        }
-                    } else {
-                        $item->$column = (string) $properties['direction'] === 'from' ? $this->convertFromStorage($item->$column, $properties['timezone']) : $this->convertToStorage($item->$column, $properties['timezone']);
-                        if ($item->$column instanceof TimezoneDate) {
-                            if ($properties['format'] !== null) {
-                                if (\is_array($properties['format'])) {
-                                    $item->$column = $item->$column->formatToLocale($properties['format'][0], $properties['format'][1]);
-                                } else {
-                                    $item->$column = $item->$column->format($properties['format']);
-                                }
-                            } else {
-                                $item->$column = $item->$column->formatDefault();
-                            }
-                        }
-                    }
-                }
-
-                return $item;
-            });
-        }
-
-        throw new \InvalidArgumentException('A valid collection must be specified.');
     }
 
     /**

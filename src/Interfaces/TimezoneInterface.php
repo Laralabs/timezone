@@ -14,7 +14,7 @@ interface TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate;
+    public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate;
 
     /**
      * Convert timestamp from storage to display timezone.
@@ -24,31 +24,7 @@ interface TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate;
-
-    /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string                         $fromTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionToStorage($collection = null, array $columns = [], $fromTimezone = null): \Illuminate\Support\Collection;
-
-    /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string                         $toTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionFromStorage($collection = null, array $columns = [], $toTimezone = null): \Illuminate\Support\Collection;
+    public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate;
 
     /**
      * Get's the current timezone from

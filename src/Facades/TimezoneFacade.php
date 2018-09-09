@@ -16,9 +16,9 @@ class TimezoneFacade implements TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertToStorage($date = null, $fromTimezone = null): ?TimezoneDate
+    public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate
     {
-        return app('timezone')->convertToStorage($date, $fromTimezone);
+        return app('timezone')->toStorage($date, $fromTimezone);
     }
 
     /**
@@ -29,41 +29,9 @@ class TimezoneFacade implements TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function convertFromStorage($date = null, $toTimezone = null): ?TimezoneDate
+    public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate
     {
-        return app('timezone')->convertFromStorage($date, $toTimezone);
-    }
-
-    /**
-     * Converts timestamps or specified columns to storage
-     * from display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string|array                   $format
-     * @param null|string                         $fromTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionToStorage($collection = null, array $columns = [], $format = null, $fromTimezone = null): Collection
-    {
-        return app('timezone')->convertCollectionToStorage($collection, $columns, $format, $fromTimezone);
-    }
-
-    /**
-     * Converts timestamps or specified columns from storage
-     * to display timezone.
-     *
-     * @param null|\Illuminate\Support\Collection $collection
-     * @param array                               $columns
-     * @param null|string|array                   $format
-     * @param null|string                         $toTimezone
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function convertCollectionFromStorage($collection = null, array $columns = [], $format = null, $toTimezone = null): Collection
-    {
-        return app('timezone')->convertCollectionFromStorage($collection, $columns, $format, $toTimezone);
+        return app('timezone')->fromStorage($date, $toTimezone);
     }
 
     /**

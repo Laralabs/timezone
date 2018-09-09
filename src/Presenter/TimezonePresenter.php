@@ -100,9 +100,9 @@ class TimezonePresenter extends Presenter
         if ($this->__isset($property)) {
             $this->property = $property;
             if (timezone()->isTimestamp($value)) {
-                $this->model->$property = timezone()->convertToStorage($value, $this->displayTimezone)->format('Y-m-d H:i:s');
+                $this->model->$property = timezone()->toStorage($value, $this->displayTimezone)->format('Y-m-d H:i:s');
             } else {
-                $this->model->$property = timezone()->convertToStorage($value, $this->displayTimezone)->format('Y-m-d');
+                $this->model->$property = timezone()->toStorage($value, $this->displayTimezone)->format('Y-m-d');
             }
 
             return $this->model;
@@ -128,7 +128,7 @@ class TimezonePresenter extends Presenter
             $locale = $locale ?? $this->locale;
             $timezone = $toTimezone ?? $this->displayTimezone;
 
-            return timezone()->convertFromStorage($this->model->$property, $timezone)->formatToLocale($format, $locale);
+            return timezone()->fromStorage($this->model->$property, $timezone)->formatToLocale($format, $locale);
         }
 
         throw new TimezonePresenterException('Please specify a property before attempting to convert it');
