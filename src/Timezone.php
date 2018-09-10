@@ -2,9 +2,7 @@
 
 namespace Laralabs\Timezone;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Date\Date;
