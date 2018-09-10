@@ -33,8 +33,9 @@ class TimezoneDate extends Date
     /**
      * Create a TimezoneDate instance from a string.
      *
-     * @param  string $time
-     * @param  string|DateTimeZone $timezone
+     * @param string              $time
+     * @param string|DateTimeZone $timezone
+     *
      * @return TimezoneDate
      */
     public static function parse($time = null, $timezone = null)

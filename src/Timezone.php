@@ -201,7 +201,7 @@ class Timezone implements TimezoneInterface
     public function isTimestamp($value): bool
     {
         if (strpos($value, ':')) {
-            return (strpos($value, '-') || strpos($value, '/'));
+            return strpos($value, '-') || strpos($value, '/');
         }
 
         return false;
