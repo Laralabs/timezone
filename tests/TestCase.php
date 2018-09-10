@@ -44,7 +44,7 @@ abstract class TestCase extends Orchestra
     protected $testTimeUTC = '13:00:00';
 
     /** @var string */
-    protected $testTime = '14:00:00';
+    protected $testTimeFormatted = '13:00';
 
     /** @var string */
     protected $testLocale = 'nl';
@@ -118,7 +118,7 @@ abstract class TestCase extends Orchestra
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
             'date'      => $this->testDateUTC,
-            'time'      => $this->testTimeUTC,
+            'time'      => $this->testTimeUTC
         ]);
 
         TestModel::create([
@@ -126,7 +126,7 @@ abstract class TestCase extends Orchestra
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
             'date'      => $this->testDateUTC,
-            'time'      => $this->testTimeUTC,
+            'time'      => $this->testTimeUTC
         ]);
     }
 

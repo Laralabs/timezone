@@ -24,17 +24,11 @@ class Timezone implements TimezoneInterface
      */
     protected $defaultFormat;
 
-    /**
-     * @var \Illuminate\Config\Repository|mixed
-     */
-    protected $parseUK;
-
     public function __construct()
     {
         $this->storageTimezone = config('app.timezone');
         $this->displayTimezone = session()->has('timezone') ? session()->get('timezone') : config('timezone.timezone');
         $this->defaultFormat = config('timezone.format');
-        $this->parseUK = config('timezone.parse_uk_dates');
     }
 
     /**
@@ -99,14 +93,11 @@ class Timezone implements TimezoneInterface
         if ($date instanceof Carbon) {
             $date = $date->format('Y-m-d H:i:s');
         }
-        if ($this->parseUK) {
-            $date = $this->formatUKDate($date);
-        }
         if (!$this->isTimestamp($date)) {
             $timezone = $this->storageTimezone;
         }
 
-        return TimezoneDate::parse($date, $timezone);
+        return TimezoneDate::parse($this->sanitizeDate($date), $timezone);
     }
 
     /**
@@ -180,13 +171,13 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Format UK Date, replace '/' with '-'.
+     * Sanitize date, replace '/' with '-'.
      *
      * @param $date
      *
      * @return string
      */
-    protected function formatUKDate($date): string
+    protected function sanitizeDate($date): string
     {
         return str_replace('/', '-', $date);
     }
@@ -201,7 +192,7 @@ class Timezone implements TimezoneInterface
     public function isTimestamp($value): bool
     {
         if (strpos($value, ':')) {
-            return strpos($value, '-') || strpos($value, '/');
+            return (strpos($value, '-') || strpos($value, '/') || \strlen($value) > 8);
         }
 
         return false;

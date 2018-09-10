@@ -31,30 +31,6 @@ class TimezoneDate extends Date
     }
 
     /**
-     * Create a TimezoneDate instance from a string.
-     *
-     * @param string              $time
-     * @param string|DateTimeZone $timezone
-     *
-     * @return TimezoneDate
-     */
-    public static function parse($time = null, $timezone = null)
-    {
-        if ($time instanceof Carbon) {
-            return new static(
-                $time->toDateTimeString(),
-                $timezone ?: $time->getTimezone()
-            );
-        }
-
-        if (!is_int($time)) {
-            $time = static::translateTimeString($time);
-        }
-
-        return new static($time, $timezone);
-    }
-
-    /**
      * Formats date to the specified locale.
      *
      * @param string $format

@@ -101,7 +101,8 @@ class TimezonePresenter extends Presenter
         if ($this->__isset($property)) {
             $this->property = $property;
 
-            $this->model->$property = $this->formatDate($value, timezone()->toStorage($value, $this->displayTimezone));
+            $converted = timezone()->toStorage($value, $this->displayTimezone);
+            $this->model->$property = $this->formatDate($value, $converted);
 
             return $this->model;
         }
@@ -112,10 +113,8 @@ class TimezonePresenter extends Presenter
     /**
      * @param $original
      * @param $converted
-     *
-     * @throws TimezonePresenterException
-     *
      * @return string
+     * @throws TimezonePresenterException
      */
     private function formatDate($original, TimezoneDate $converted): string
     {
@@ -139,9 +138,9 @@ class TimezonePresenter extends Presenter
      *
      * @throws TimezonePresenterException
      *
-     * @return mixed
+     * @return string
      */
-    public function display(string $format = null, string $locale = null, string $toTimezone = null)
+    public function display(string $format = null, string $locale = null, string $toTimezone = null): string
     {
         if ($this->property) {
             $property = $this->property;

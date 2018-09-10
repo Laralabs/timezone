@@ -88,8 +88,6 @@ class TimezoneTest extends TestCase
     /** @test */
     public function it_parses_full_uk_date_to_storage_and_formats_it_back(): void
     {
-        Config::set('timezone.parse_uk_dates', true);
-
         $converted = timezone()->toStorage($this->testUKParse);
 
         $this->assertEquals($this->testUTC, $converted);
@@ -110,7 +108,6 @@ class TimezoneTest extends TestCase
     /** @test */
     public function it_accepts_date_and_keeps_utc_timezone(): void
     {
-        Config::set('timezone.parse_uk_dates', true);
         $converted = timezone()->fromStorage($this->testDate);
 
         $this->assertEquals($this->testDate, $converted->format('d/m/Y'));
@@ -225,7 +222,7 @@ class TimezoneTest extends TestCase
 
         $converted = $model->timezone()->time->display();
 
-        $this->assertEquals($this->testTime, $converted);
+        $this->assertEquals($this->testTimeFormatted, $converted);
 
         $model->timezone()->time = $converted;
         $this->assertEquals($this->testTimeUTC, $model->time);
