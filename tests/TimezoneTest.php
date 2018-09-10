@@ -206,6 +206,32 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
+    public function presenter_it_can_handle_setting_a_single_date(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $converted = $model->timezone()->date->display();
+
+        $this->assertEquals($this->testDate, $converted);
+
+        $model->timezone()->date = $converted;
+        $this->assertEquals($this->testDateUTC, $model->date);
+    }
+
+    /** @test */
+    public function presenter_it_can_handle_setting_a_single_time(): void
+    {
+        $model = TestModelPresenter::first();
+
+        $converted = $model->timezone()->time->display();
+
+        $this->assertEquals($this->testTime, $converted);
+
+        $model->timezone()->time = $converted;
+        $this->assertEquals($this->testTimeUTC, $model->time);
+    }
+
+    /** @test */
     public function helper_it_can_get_the_current_timezone(): void
     {
         $this->assertEquals('Europe/London', timezone()->getCurrentTimezone());

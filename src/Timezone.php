@@ -192,14 +192,50 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Check if given date is a timestamp.
+     * Check if given value is a timestamp.
      *
-     * @param $date
+     * @param $value
      *
      * @return bool
      */
-    public function isTimestamp($date): bool
+    public function isTimestamp($value): bool
     {
-        return strpos($date, ':') ? true : false;
+        if (strpos($value, ':')) {
+            return (strpos($value, '-') || strpos($value, '/'));
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if given value is a time.
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isTime($value): bool
+    {
+        if (strpos($value, ':')) {
+            return !(strpos($value, '-') || strpos($value, '/'));
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if given value is a date.
+     *
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isDate($value): bool
+    {
+        if (strpos($value, '-') || strpos($value, '/')) {
+            return !strpos($value, ':');
+        }
+
+        return false;
     }
 }

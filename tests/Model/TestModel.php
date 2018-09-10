@@ -17,6 +17,8 @@ class TestModel extends Model
         'name',
         'timestamp',
         'datetime',
+        'date',
+        'time'
     ];
 
     protected $dates = [

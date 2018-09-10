@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Date\Date;
 use Laralabs\Timezone\Exceptions\TimezonePresenterException;
+use Laralabs\Timezone\TimezoneDate;
 
 class TimezonePresenter extends Presenter
 {
@@ -99,16 +100,34 @@ class TimezonePresenter extends Presenter
     {
         if ($this->__isset($property)) {
             $this->property = $property;
-            if (timezone()->isTimestamp($value)) {
-                $this->model->$property = timezone()->toStorage($value, $this->displayTimezone)->format('Y-m-d H:i:s');
-            } else {
-                $this->model->$property = timezone()->toStorage($value, $this->displayTimezone)->format('Y-m-d');
-            }
+
+            $this->model->$property = $this->formatDate($value, timezone()->toStorage($value, $this->displayTimezone));
 
             return $this->model;
         }
 
         throw new TimezonePresenterException('Property '.$property.' not found in '.\get_class($this->model).'::$timezoneDates');
+    }
+
+    /**
+     * @param $original
+     * @param $converted
+     * @return string
+     * @throws TimezonePresenterException
+     */
+    private function formatDate($original, TimezoneDate $converted): string
+    {
+        if (timezone()->isTimestamp($original)) {
+            return $converted->format('Y-m-d H:i:s');
+        }
+        if (timezone()->isDate($original)) {
+            return $converted->format('Y-m-d');
+        }
+        if (timezone()->isTime($original)) {
+            return $converted->format('H:i:s');
+        }
+
+        throw new TimezonePresenterException('The value must be a valid timestamp, date or time');
     }
 
     /**

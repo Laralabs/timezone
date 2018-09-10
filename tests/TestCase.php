@@ -35,7 +35,16 @@ abstract class TestCase extends Orchestra
     protected $testUKFormat = 'd/m/Y H:i:s';
 
     /** @var string */
+    protected $testDateUTC = '2018-07-25';
+
+    /** @var string */
     protected $testDate = '25/07/2018';
+
+    /** @var string */
+    protected $testTimeUTC = '13:00:00';
+
+    /** @var string */
+    protected $testTime = '14:00:00';
 
     /** @var string */
     protected $testLocale = 'nl';
@@ -100,18 +109,24 @@ abstract class TestCase extends Orchestra
             $table->string('name');
             $table->timestamp('timestamp');
             $table->dateTime('datetime');
+            $table->date('date');
+            $table->time('time');
         });
 
         TestModel::create([
             'name'      => 'Test Model',
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
+            'date'      => $this->testDateUTC,
+            'time'      => $this->testTimeUTC
         ]);
 
         TestModel::create([
             'name'      => 'Test Model 2',
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
+            'date'      => $this->testDateUTC,
+            'time'      => $this->testTimeUTC
         ]);
     }
 
