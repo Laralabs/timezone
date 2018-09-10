@@ -118,7 +118,7 @@ abstract class TestCase extends Orchestra
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
             'date'      => $this->testDateUTC,
-            'time'      => $this->testTimeUTC
+            'time'      => $this->testTimeUTC,
         ]);
 
         TestModel::create([
@@ -126,7 +126,7 @@ abstract class TestCase extends Orchestra
             'timestamp' => $this->testUTC,
             'datetime'  => $this->testUTC,
             'date'      => $this->testDateUTC,
-            'time'      => $this->testTimeUTC
+            'time'      => $this->testTimeUTC,
         ]);
     }
 

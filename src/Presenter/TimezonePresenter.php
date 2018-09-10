@@ -112,8 +112,10 @@ class TimezonePresenter extends Presenter
     /**
      * @param $original
      * @param $converted
-     * @return string
+     *
      * @throws TimezonePresenterException
+     *
+     * @return string
      */
     private function formatDate($original, TimezoneDate $converted): string
     {
