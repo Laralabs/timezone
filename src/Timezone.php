@@ -2,9 +2,8 @@
 
 namespace Laralabs\Timezone;
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Session;
 use Jenssegers\Date\Date;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
 

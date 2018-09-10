@@ -204,4 +204,16 @@ class TimezoneTest extends TestCase
 
         App::setLocale('en');
     }
+
+    /** @test */
+    public function helper_it_can_get_the_current_timezone(): void
+    {
+        $this->assertEquals('Europe/London', timezone()->getCurrentTimezone());
+    }
+
+    /** @test */
+    public function facade_it_can_get_the_current_timezone(): void
+    {
+        $this->assertEquals('Europe/London', \Laralabs\Timezone\Facades\Timezone::getCurrentTimezone());
+    }
 }
