@@ -2,7 +2,6 @@
 
 namespace Laralabs\Timezone\Facades;
 
-use Illuminate\Support\Collection;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
 use Laralabs\Timezone\TimezoneDate;
 

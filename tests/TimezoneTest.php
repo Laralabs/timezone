@@ -3,11 +3,9 @@
 namespace Laralabs\Timezone\Tests;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
-use Jenssegers\Date\Date;
 use Laralabs\Timezone\Presenter\TimezonePresenter;
 use Laralabs\Timezone\Tests\Model\TestModel;
 use Laralabs\Timezone\Tests\Model\TestModelPresenter;
