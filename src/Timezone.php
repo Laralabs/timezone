@@ -36,8 +36,9 @@ class Timezone implements TimezoneInterface
      * @param null $date
      * @param null $fromTimezone
      *
-     * @return TimezoneDate|null
      * @throws TimezoneException
+     *
+     * @return TimezoneDate|null
      */
     public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate
     {
@@ -55,8 +56,9 @@ class Timezone implements TimezoneInterface
      * @param null $date
      * @param null $toTimezone
      *
-     * @return TimezoneDate|null
      * @throws TimezoneException
+     *
+     * @return TimezoneDate|null
      */
     public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate
     {
@@ -77,8 +79,9 @@ class Timezone implements TimezoneInterface
      * @param null $date
      * @param null $timezone
      *
-     * @return TimezoneDate
      * @throws TimezoneException
+     *
+     * @return TimezoneDate
      */
     protected function createDate($date = null, $timezone = null): Date
     {

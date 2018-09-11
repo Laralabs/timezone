@@ -18,7 +18,7 @@ class TestModel extends Model
         'timestamp',
         'datetime',
         'date',
-        'time'
+        'time',
     ];
 
     protected $dates = [
