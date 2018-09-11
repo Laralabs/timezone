@@ -120,10 +120,10 @@ class TimezonePresenter extends Presenter
     private function formatDate(string $property, string $original, TimezoneDate $converted): string
     {
         if (timezone()->isTimestamp($original)) {
-            return $converted->format('Y-m-d H:i:s');
+            return !$this->hasMicroseconds($original) ? $converted->format('Y-m-d H:i:s') : $converted->format('Y-m-d H:i:s.u');
         }
         if (timezone()->isTime($original)) {
-            return $converted->format('H:i:s');
+            return !$this->hasMicroseconds($original) ? $converted->format('H:i:s') : $converted->format('H:i:s.u');
         }
         if (timezone()->isDate($original)) {
             return $converted->format('Y-m-d');

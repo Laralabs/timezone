@@ -89,10 +89,10 @@ class Timezone implements TimezoneInterface
             $timezone = $this->storageTimezone;
         }
         if (\is_int($date)) {
-            $date = date('Y-m-d H:i:s', $date);
+            $date = date('Y-m-d H:i:s.u', $date);
         }
         if ($date instanceof Carbon) {
-            $date = $date->format('Y-m-d H:i:s');
+            $date = $date->format('Y-m-d H:i:s.u');
         }
         if (!$this->isTimestamp($date)) {
             $timezone = $this->storageTimezone;
@@ -198,7 +198,7 @@ class Timezone implements TimezoneInterface
     public function isTime($value): bool
     {
         if (strpos($value, ':')) {
-            return !(strpos($value, '-') || strpos($value, '/')) && \strlen($value) <= 9;
+            return !(strpos($value, '-') || strpos($value, '/')) && \strlen($value) <= 15;
         }
 
         return false;
