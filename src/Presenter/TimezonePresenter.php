@@ -109,11 +109,13 @@ class TimezonePresenter extends Presenter
     }
 
     /**
-     * @param string $property
-     * @param string $original
+     * @param string       $property
+     * @param string       $original
      * @param TimezoneDate $converted
-     * @return string
+     *
      * @throws TimezonePresenterException
+     *
+     * @return string
      */
     private function formatDate(string $property, string $original, TimezoneDate $converted): string
     {

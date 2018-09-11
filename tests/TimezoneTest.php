@@ -5,7 +5,6 @@ namespace Laralabs\Timezone\Tests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Config;
 use Laralabs\Timezone\Exceptions\TimezoneException;
 use Laralabs\Timezone\Presenter\TimezonePresenter;
 use Laralabs\Timezone\Tests\Model\TestModel;
