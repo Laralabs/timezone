@@ -122,11 +122,11 @@ class TimezonePresenter extends Presenter
         if (timezone()->isTimestamp($original)) {
             return $converted->format('Y-m-d H:i:s');
         }
-        if (timezone()->isDate($original)) {
-            return $converted->format('Y-m-d');
-        }
         if (timezone()->isTime($original)) {
             return $converted->format('H:i:s');
+        }
+        if (timezone()->isDate($original)) {
+            return $converted->format('Y-m-d');
         }
 
         return $this->model->$property;

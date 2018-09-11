@@ -5,6 +5,7 @@ namespace Laralabs\Timezone\Tests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Config;
 use Laralabs\Timezone\Exceptions\TimezoneException;
 use Laralabs\Timezone\Presenter\TimezonePresenter;
 use Laralabs\Timezone\Tests\Model\TestModel;
@@ -67,11 +68,37 @@ class TimezoneTest extends TestCase
     }
 
     /** @test */
+    public function facade_it_can_check_if_date(): void
+    {
+        $this->assertFalse(\Laralabs\Timezone\Facades\Timezone::isDate($this->testTimeUTC));
+        $this->assertTrue(\Laralabs\Timezone\Facades\Timezone::isDate($this->testDate));
+    }
+
+    /** @test */
+    public function facade_it_can_check_if_time(): void
+    {
+        $this->assertFalse(\Laralabs\Timezone\Facades\Timezone::isTime($this->testDate));
+        $this->assertTrue(\Laralabs\Timezone\Facades\Timezone::isTime($this->testTimeUTC));
+    }
+
+    /** @test */
     public function it_can_format_to_locale(): void
     {
         $converted = \Laralabs\Timezone\Facades\Timezone::fromStorage($this->testUTC)->formatToLocale($this->testLocaleFormat, $this->testLocale);
 
         $this->assertEquals($this->testLocaleResult, $converted);
+    }
+
+    /** @test */
+    public function it_can_format_to_default(): void
+    {
+        Config::set('timezone.format', 'd/m/Y H:i:s');
+
+        $converted = timezone()->fromStorage($this->testUTC)->formatToDefault();
+
+        $this->assertEquals($this->testUKParse, $converted);
+
+        Config::set('timezone.format', 'Y-m-d H:i:s');
     }
 
     /** @test */

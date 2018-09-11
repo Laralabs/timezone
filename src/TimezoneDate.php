@@ -48,7 +48,7 @@ class TimezoneDate extends Date
     /**
      * @return mixed|string
      */
-    public function formatDefault()
+    public function formatToDefault()
     {
         return $this->format($this->defaultFormat);
     }
