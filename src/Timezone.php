@@ -5,6 +5,7 @@ namespace Laralabs\Timezone;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Jenssegers\Date\Date;
+use Laralabs\Timezone\Exceptions\TimezoneException;
 use Laralabs\Timezone\Interfaces\TimezoneInterface;
 
 class Timezone implements TimezoneInterface
@@ -32,12 +33,11 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Convert timestamp from display to storage timezone.
-     *
      * @param null $date
      * @param null $fromTimezone
      *
      * @return TimezoneDate|null
+     * @throws TimezoneException
      */
     public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate
     {
@@ -52,12 +52,11 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Convert timestamp from storage to display timezone.
-     *
      * @param null $date
      * @param null $toTimezone
      *
      * @return TimezoneDate|null
+     * @throws TimezoneException
      */
     public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate
     {
@@ -75,12 +74,11 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Create a Date object.
-     *
      * @param null $date
      * @param null $timezone
      *
      * @return TimezoneDate
+     * @throws TimezoneException
      */
     protected function createDate($date = null, $timezone = null): Date
     {
@@ -97,23 +95,22 @@ class Timezone implements TimezoneInterface
             $timezone = $this->storageTimezone;
         }
 
-        return TimezoneDate::parse($this->sanitizeDate($date), $timezone);
+        try {
+            return TimezoneDate::parse($this->sanitizeDate($date), $timezone);
+        } catch (\Exception $e) {
+            throw new TimezoneException('Error parsing time string, the format of ('.$date.') is invalid');
+        }
     }
 
     /**
-     * Get's the current timezone from
-     * the session.
-     *
-     * @return mixed|null
+     * @return string|null
      */
-    public function getCurrentTimezone()
+    public function getCurrentTimezone():? string
     {
         return $this->displayTimezone;
     }
 
     /**
-     * Returns array of PHP timezones.
-     *
      * @return array
      */
     public function getTimezones(): array
@@ -144,13 +141,11 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Format GMT offset.
-     *
      * @param $offset
      *
      * @return string
      */
-    protected function formatGmtOffset($offset): string
+    private function formatGmtOffset($offset): string
     {
         $hours = (int) ($offset / 3600);
         $minutes = abs((int) ($offset % 3600 / 60));
@@ -159,20 +154,16 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Format timezone name.
-     *
      * @param $name
      *
      * @return mixed
      */
-    protected function formatTimezoneName($name): string
+    private function formatTimezoneName($name): string
     {
         return str_replace(['/', '_', 'St '], [', ', ' ', 'St. '], $name);
     }
 
     /**
-     * Sanitize date, replace '/' with '-'.
-     *
      * @param $date
      *
      * @return string
@@ -183,8 +174,6 @@ class Timezone implements TimezoneInterface
     }
 
     /**
-     * Check if given value is a timestamp.
-     *
      * @param $value
      *
      * @return bool
@@ -192,15 +181,13 @@ class Timezone implements TimezoneInterface
     public function isTimestamp($value): bool
     {
         if (strpos($value, ':')) {
-            return (strpos($value, '-') || strpos($value, '/') || \strlen($value) > 8);
+            return (strpos($value, '-') || strpos($value, '/')) || \strlen($value) > 8;
         }
 
         return false;
     }
 
     /**
-     * Check if given value is a time.
-     *
      * @param $value
      *
      * @return bool
@@ -208,15 +195,13 @@ class Timezone implements TimezoneInterface
     public function isTime($value): bool
     {
         if (strpos($value, ':')) {
-            return !(strpos($value, '-') || strpos($value, '/'));
+            return !(strpos($value, '-') || strpos($value, '/')) && \strlen($value) <= 9;
         }
 
         return false;
     }
 
     /**
-     * Check if given value is a date.
-     *
      * @param $value
      *
      * @return bool
@@ -224,7 +209,7 @@ class Timezone implements TimezoneInterface
     public function isDate($value): bool
     {
         if (strpos($value, '-') || strpos($value, '/')) {
-            return !strpos($value, ':');
+            return !strpos($value, ':') && \strlen($value) === 10;
         }
 
         return false;

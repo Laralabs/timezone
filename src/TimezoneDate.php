@@ -17,8 +17,6 @@ class TimezoneDate extends Date
     protected $defaultFormat;
 
     /**
-     * Date constructor.
-     *
      * @param null|string $time
      * @param null        $timezone
      */
@@ -31,8 +29,6 @@ class TimezoneDate extends Date
     }
 
     /**
-     * Formats date to the specified locale.
-     *
      * @param string $format
      * @param string $locale
      *
@@ -50,8 +46,6 @@ class TimezoneDate extends Date
     }
 
     /**
-     * Formats date to the default config format.
-     *
      * @return mixed|string
      */
     public function formatDefault()

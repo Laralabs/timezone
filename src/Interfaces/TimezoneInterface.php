@@ -7,46 +7,49 @@ use Laralabs\Timezone\TimezoneDate;
 interface TimezoneInterface
 {
     /**
-     * Convert timestamp from display to storage timezone.
-     *
      * @param null $date
      * @param null $fromTimezone
      *
      * @return TimezoneDate|null
      */
-    public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate;
+    public function toStorage($date = null, $fromTimezone = null):? TimezoneDate;
 
     /**
-     * Convert timestamp from storage to display timezone.
-     *
      * @param null $date
      * @param null $toTimezone
      *
      * @return TimezoneDate|null
      */
-    public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate;
+    public function fromStorage($date = null, $toTimezone = null):? TimezoneDate;
 
     /**
-     * Get's the current timezone from
-     * the session.
-     *
-     * @return mixed|null
+     * @return string|null
      */
-    public function getCurrentTimezone();
+    public function getCurrentTimezone():? string;
 
     /**
-     * Returns array of PHP timezones.
-     *
      * @return array
      */
     public function getTimezones(): array;
 
     /**
-     * Check if given date is a timestamp.
-     *
-     * @param $date
+     * @param $value
      *
      * @return bool
      */
-    public function isTimestamp($date): bool;
+    public function isTimestamp($value): bool;
+
+    /**
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isTime($value): bool;
+
+    /**
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isDate($value): bool;
 }

@@ -8,8 +8,6 @@ use Laralabs\Timezone\Facades\TimezoneFacade;
 class TimezoneServiceProvider extends ServiceProvider
 {
     /**
-     * Register the service provider.
-     *
      * @return void
      */
     public function register(): void
@@ -22,8 +20,6 @@ class TimezoneServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap the application events.
-     *
      * @return void
      */
     public function boot(): void
@@ -32,8 +28,6 @@ class TimezoneServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bind classes to IoC.
-     *
      * @return void
      */
     protected function registerBindings(): void
@@ -48,8 +42,6 @@ class TimezoneServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish package configuration file.
-     *
      * @return void
      */
     protected function publishConfig(): void

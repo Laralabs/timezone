@@ -34,19 +34,14 @@ class TimezoneFacade implements TimezoneInterface
     }
 
     /**
-     * Get's the current timezone from
-     * the session.
-     *
-     * @return mixed|null
+     * @return string|null
      */
-    public function getCurrentTimezone()
+    public function getCurrentTimezone():? string
     {
         return app('timezone')->getCurrentTimezone();
     }
 
     /**
-     * Returns array of PHP timezones.
-     *
      * @return array
      */
     public function getTimezones(): array
@@ -55,14 +50,32 @@ class TimezoneFacade implements TimezoneInterface
     }
 
     /**
-     * Check if given date is a timestamp.
-     *
-     * @param $date
+     * @param $value
      *
      * @return bool
      */
-    public function isTimestamp($date): bool
+    public function isTimestamp($value): bool
     {
-        return app('timezone')->isTimestamp($date);
+        return app('timezone')->isTimestamp($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isTime($value): bool
+    {
+        return app('timezone')->isTime($value);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return bool
+     */
+    public function isDate($value): bool
+    {
+        return app('timezone')->isDate($value);
     }
 }

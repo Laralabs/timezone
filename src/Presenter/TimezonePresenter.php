@@ -37,8 +37,6 @@ class TimezonePresenter extends Presenter
     protected $locale;
 
     /**
-     * TimezonePresenter constructor.
-     *
      * @param Model $model
      * @param array $dates
      */
@@ -102,7 +100,7 @@ class TimezonePresenter extends Presenter
             $this->property = $property;
 
             $converted = timezone()->toStorage($value, $this->displayTimezone);
-            $this->model->$property = $this->formatDate($value, $converted);
+            $this->model->$property = $this->formatDate($property, $value, $converted);
 
             return $this->model;
         }
@@ -111,12 +109,13 @@ class TimezonePresenter extends Presenter
     }
 
     /**
-     * @param $original
-     * @param $converted
+     * @param string $property
+     * @param string $original
+     * @param TimezoneDate $converted
      * @return string
      * @throws TimezonePresenterException
      */
-    private function formatDate($original, TimezoneDate $converted): string
+    private function formatDate(string $property, string $original, TimezoneDate $converted): string
     {
         if (timezone()->isTimestamp($original)) {
             return $converted->format('Y-m-d H:i:s');
@@ -128,7 +127,7 @@ class TimezonePresenter extends Presenter
             return $converted->format('H:i:s');
         }
 
-        throw new TimezonePresenterException('The value must be a valid timestamp, date or time');
+        return $this->model->$property;
     }
 
     /**

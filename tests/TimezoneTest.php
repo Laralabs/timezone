@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
+use Laralabs\Timezone\Exceptions\TimezoneException;
 use Laralabs\Timezone\Presenter\TimezonePresenter;
 use Laralabs\Timezone\Tests\Model\TestModel;
 use Laralabs\Timezone\Tests\Model\TestModelPresenter;
@@ -226,6 +227,16 @@ class TimezoneTest extends TestCase
 
         $model->timezone()->time = $converted;
         $this->assertEquals($this->testTimeUTC, $model->time);
+    }
+
+    /** @test */
+    public function it_throws_exception_on_invalid_time_string(): void
+    {
+        $date = 'werjkhewrk 15th 2018 12:30:00';
+        $this->expectException(TimezoneException::class);
+        $this->expectExceptionMessage('Error parsing time string, the format of ('.$date.') is invalid');
+
+        timezone()->fromStorage($date);
     }
 
     /** @test */
