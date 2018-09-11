@@ -8,8 +8,6 @@ use Laralabs\Timezone\TimezoneDate;
 class TimezoneFacade implements TimezoneInterface
 {
     /**
-     * Convert timestamp from display to storage timezone.
-     *
      * @param null $date
      * @param null $fromTimezone
      *
@@ -21,8 +19,6 @@ class TimezoneFacade implements TimezoneInterface
     }
 
     /**
-     * Convert timestamp from storage to display timezone.
-     *
      * @param null $date
      * @param null $toTimezone
      *
