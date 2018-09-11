@@ -60,10 +60,10 @@ timezone()->toStorage($date, $fromTimezone);
 
 The package also comes with a presenter that can be added to models as a trait, for more information on this see the full documentation available below.
 
-## :orange-book: Documentation
-Full documentation can be found [on the website](https://docs.laralabs.uk/timezone/).
+## :orange_book: Documentation
+Full documentation can be found [on the docs website](https://docs.laralabs.uk/timezone/).
 
-## :speech-balloon: Support
+## :speech_balloon: Support
 Please raise an issue on GitHub if there is a problem.
 
 ## :key: License
