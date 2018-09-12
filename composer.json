@@ -1,6 +1,6 @@
 {
     "name": "laralabs/timezone",
-    "description": "Laravel package for handling timezones",
+    "description": "Laravel package for easy bi-directional conversion of DateTime into a variety of formats and locales",
     "license": "MIT",
     "authors": [
       {
@@ -11,7 +11,7 @@
     "minimum-stability": "dev",
     "require": {
       "php": ">=7.1",
-      "illuminate/support": "^5.4",
+      "illuminate/support": "^5.5",
       "jenssegers/date": "^3.4.0"
     },
     "require-dev": {
