@@ -3,7 +3,6 @@
 namespace Laralabs\Timezone\Presenter;
 
 use Illuminate\Database\Eloquent\Model;
-use Laralabs\Timezone\Exceptions\TimezonePresenterException;
 
 abstract class Presenter
 {
@@ -19,6 +18,7 @@ abstract class Presenter
 
     /**
      * @param $value
+     *
      * @return false|int
      */
     protected function hasMicroseconds($value)
