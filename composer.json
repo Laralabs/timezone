@@ -1,42 +1,55 @@
 {
-    "name": "laralabs/timezone",
-    "description": "Laravel package for easy bi-directional conversion of DateTime into a variety of formats and locales",
-    "license": "MIT",
-    "authors": [
-      {
-        "name": "Matt Clinton",
-        "email": "matt@laralabs.uk"
-      }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-      "php": ">=7.1",
-      "illuminate/support": "^5.5",
-      "jenssegers/date": "^3.4.0"
+  "name": "laralabs/timezone",
+  "description": "Laravel package for easy bi-directional conversion of DateTime into a variety of formats and locales",
+  "keywords": [
+    "laralabs",
+    "laravel",
+    "timezone",
+    "conversion",
+    "locale",
+    "presenter"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Matt Clinton",
+      "email": "matt@laralabs.uk",
+      "homepage": "https://github.com/clnt"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "illuminate/support": "^5.5",
+    "jenssegers/date": "^3.4.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.0",
+    "orchestra/testbench": "^3.4",
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Laralabs\\Timezone\\": "src/"
     },
-    "require-dev": {
-      "mockery/mockery": "^1.0",
-      "orchestra/testbench": "^3.4",
-      "phpunit/phpunit": ">6.0"
-    },
-    "autoload": {
-      "psr-4": {
-        "Laralabs\\Timezone\\": "src/",
-        "Laralabs\\Timezone\\Tests\\": "tests/"
-      },
-      "files": [
-        "src/Helpers/helpers.php"
-      ]
-    },
-    "extra": {
-      "laravel": {
-        "providers": [
-          "Laralabs\\Timezone\\TimezoneServiceProvider"
-        ],
-        "aliases": {
-          "Timezone": "Laralabs\\Timezone\\Facades\\Timezone"
-        }
+    "files": [
+      "src/Helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Laralabs\\Timezone\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Laralabs\\Timezone\\TimezoneServiceProvider"
+      ],
+      "aliases": {
+        "Timezone": "Laralabs\\Timezone\\Facades\\Timezone"
       }
     }
-  }
-  
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

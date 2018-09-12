@@ -22,12 +22,12 @@ class TimezonePresenter extends Presenter
     public $property;
 
     /**
-     * @var \Illuminate\Config\Repository|mixed
+     * @var \Illuminate\Config\Repository|string|null
      */
     protected $displayTimezone;
 
     /**
-     * @var \Illuminate\Config\Repository|mixed
+     * @var \Illuminate\Config\Repository|string|null
      */
     protected $displayFormat;
 
@@ -113,8 +113,6 @@ class TimezonePresenter extends Presenter
      * @param string       $original
      * @param TimezoneDate $converted
      *
-     * @throws TimezonePresenterException
-     *
      * @return string
      */
     private function formatDate(string $property, string $original, TimezoneDate $converted): string
@@ -133,9 +131,9 @@ class TimezonePresenter extends Presenter
     }
 
     /**
-     * @param string|null $format
-     * @param string|null $locale
-     * @param string|null $toTimezone
+     * @param \Illuminate\Config\Repository|string|null $format
+     * @param \Illuminate\Config\Repository|string|null $locale
+     * @param string|null                               $toTimezone
      *
      * @throws TimezonePresenterException
      *
