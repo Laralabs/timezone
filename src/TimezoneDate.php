@@ -20,7 +20,7 @@ class TimezoneDate extends Date
      * @param null|string $time
      * @param null        $timezone
      */
-    public function __construct(?string $time = null, $timezone = null)
+    public function __construct($time = null, $timezone = null)
     {
         parent::__construct($time, $timezone);
 
