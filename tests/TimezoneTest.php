@@ -138,7 +138,13 @@ class TimezoneTest extends TestCase
         $converted = timezone()->fromStorage($this->testDate);
 
         $this->assertEquals($this->testDate, $converted->format('d/m/Y'));
+
         $timezone = new \DateTimeZone('UTC');
+
+        if (!$converted->timezone instanceof \DateTimeZone) {
+            $timezone = new \Carbon\CarbonTimeZone('UTC');
+        }
+
         $this->assertEquals($timezone, $converted->timezone);
     }
 
