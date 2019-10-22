@@ -145,7 +145,7 @@ class TimezoneTest extends TestCase
             $timezone = new \Carbon\CarbonTimeZone('UTC');
         }
 
-        $this->assertEquals($timezone->timezone, $converted->timezone->timezone);
+        $this->assertEquals($timezone->getName(), $converted->timezone->getName());
     }
 
     /** @test */
