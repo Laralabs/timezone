@@ -15,7 +15,8 @@ class TimezoneServiceProvider extends ServiceProvider
         $this->registerBindings();
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/timezone.php', 'timezone'
+            __DIR__.'/../config/timezone.php',
+            'timezone'
         );
     }
 

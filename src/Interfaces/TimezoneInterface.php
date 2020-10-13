@@ -12,7 +12,7 @@ interface TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function toStorage($date = null, $fromTimezone = null):? TimezoneDate;
+    public function toStorage($date = null, $fromTimezone = null): ?TimezoneDate;
 
     /**
      * @param null $date
@@ -20,12 +20,12 @@ interface TimezoneInterface
      *
      * @return TimezoneDate|null
      */
-    public function fromStorage($date = null, $toTimezone = null):? TimezoneDate;
+    public function fromStorage($date = null, $toTimezone = null): ?TimezoneDate;
 
     /**
      * @return string|null
      */
-    public function getCurrentTimezone():? string;
+    public function getCurrentTimezone(): ?string;
 
     /**
      * @return array
