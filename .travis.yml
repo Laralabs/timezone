@@ -3,15 +3,15 @@ language: php
 php:
   - 7.2
   - 7.3
+  - 7.4
 
 env:
   global:
     - CC_TEST_REPORTER_ID=$CODECLIMATE_REPO_TOKEN
   matrix:
-    - LARAVEL_VERSION=5.5.*
-    - LARAVEL_VERSION=5.7.*
     - LARAVEL_VERSION=5.8.*
-    - LARAVEL_VERSION=6.0.*
+    - LARAVEL_VERSION=6.*
+    - LARAVEL_VERSION=7.*
 
 matrix:
   fast_finish: true
