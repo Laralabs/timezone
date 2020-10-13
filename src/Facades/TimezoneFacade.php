@@ -32,7 +32,7 @@ class TimezoneFacade implements TimezoneInterface
     /**
      * @return string|null
      */
-    public function getCurrentTimezone():? string
+    public function getCurrentTimezone(): ?string
     {
         return app('timezone')->getCurrentTimezone();
     }
